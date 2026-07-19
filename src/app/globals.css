@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* الخطوط */
+  --font-sans: 'IBM Plex Sans Arabic', sans-serif;
+
+  /* الألوان الأساسية */
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-border: #e5e7eb;
+  --color-primary: #c9aa7b;
+
+  /* الأحجام (Containers & Spacing) */
+  --breakpoint-xs: 480px;
+  --breakpoint-mid: 768px;
+  --breakpoint-3xl: 1600px;
+  --breakpoint-4xl: 1920px;
+
+  --container-3: 0.75rem;
+  --container-4: 1rem;
+  --container-40: 10rem;
+  --container-180: 45rem;
+  --container-280: 70rem;
+
+  /* يمكنك إضافة باقي أحجام الـ container هنا بنفس الطريقة */
+}
+
+/* التنسيقات العامة */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  margin: 0;
+  antialiased: true;
+}
+
+* {
+  border-color: var(--color-border);
+}
