@@ -17,7 +17,7 @@ export const Hero = () => {
 
   return (
     <>
-      <section className="relative flex items-end md:items-center justify-start w-full h-screen min-h-[600px] md:min-h-[900px] overflow-hidden pb-10 md:pb-0">
+      <section className="relative flex items-end md:items-center justify-start w-full h-screen min-h-[550px] md:min-h-[900px] overflow-hidden pb-24 md:pb-0">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero-img.png"
@@ -31,20 +31,20 @@ export const Hero = () => {
 
         <div className="w-full px-4 md:pr-20 lg:pt-24">
           <div className="relative z-10 flex flex-col items-start w-full max-w-[1500px] px-0 mx-auto text-left text-white md:px-10">
-            <div className="flex items-center gap-3 mb-4 md:mb-8">
+            <div className="flex items-center gap-3 mb-3 md:mb-8">
               <span className="text-[11px] md:text-xs font-medium opacity-90">
                 توثيق تاريخ وأصالة عائلة سعودية عريقة
               </span>
               <span className="w-6 md:w-8 h-[1px] bg-white/50" />
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-right mb-4 md:mb-6 leading-[1.3] drop-shadow-lg">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-right mb-3 md:mb-6 leading-[1.3] drop-shadow-lg">
               عائلة العمّار، حكايةُ أسرةٍ <br />
               صنعت أثرًا وجذورٌ راسخةً <br />
               تمتد في أرض الوشم...
             </h1>
 
-            <p className="max-w-md mb-6 text-sm font-semibold leading-relaxed text-right sm:max-w-xl md:max-w-2xl md:mb-10 sm:text-base md:text-md opacity-90 drop-shadow-md">
+            <p className="max-w-md mb-5 text-sm font-semibold leading-relaxed text-right sm:max-w-xl md:max-w-2xl md:mb-10 sm:text-base md:text-md opacity-90 drop-shadow-md">
               نوثّق هنا تاريخ وأنساب وتراث عائلة العمّار، شخصياتها البارزة،
               وأعمالها الخيرية، وهويتها الثقافية الممتدة من قرية القرين في إقليم
               الوشم بالمملكة العربية السعودية.
