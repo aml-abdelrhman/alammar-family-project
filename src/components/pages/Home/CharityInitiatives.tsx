@@ -1,18 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft, ArrowRight, Heart, ArrowUpLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpLeft, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-
-const filters = [
-  "مشاريع عامة",
-  "مشاريع الإسكان",
-  "كفالة الايتام",
-  "العناية بالمساجد",
-];
 
 const initiatives = [
   {
@@ -21,7 +12,7 @@ const initiatives = [
     target: "115,000",
     remaining: "15,000",
     progress: 70,
-    image: "/images/charity/1.jpg",
+    image: "/images/charity/4.jpg",
   },
   {
     title: "الأجهزة الكهربائية للمتعففين",
@@ -29,7 +20,7 @@ const initiatives = [
     target: "115,000",
     remaining: "15,000",
     progress: 70,
-    image: "/images/charity/2.jpg",
+    image: "/images/charity/5.jpg",
   },
   {
     title: "تأهيل أطفال اضطراب طيف التوحد",
@@ -37,128 +28,215 @@ const initiatives = [
     target: "115,000",
     remaining: "15,000",
     progress: 70,
-    image: "/images/charity/3.jpg",
+    image: "/images/charity/6.jpg",
   },
+  {
+    title: "رعاية وتأهيل الأسر المحتاجة",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "200,000",
+    remaining: "30,000",
+    progress: 85,
+    image: "/images/charity/4.jpg",
+  },
+  {
+    title: "سقيا الماء وتوصيل المنازل",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "90,000",
+    remaining: "10,000",
+    progress: 60,
+    image: "/images/charity/5.jpg",
+  },
+  {
+    title: "فرص العمل وتدريب الشباب",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "150,000",
+    remaining: "45,000",
+    progress: 50,
+    image: "/images/charity/6.jpg",
+  },
+  {
+    title: "مبادرة رعاية الأيتام",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "130,000",
+    remaining: "20,000",
+    progress: 75,
+    image: "/images/charity/4.jpg",
+  },
+  {
+    title: "دعم الغارمين المتعثرين",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "250,000",
+    remaining: "50,000",
+    progress: 80,
+    image: "/images/charity/5.jpg",
+  },
+  {
+    title: "كسوة الشتاء للعائلات",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "80,000",
+    remaining: "5,000",
+    progress: 90,
+    image: "/images/charity/6.jpg",
+  },  {
+    title: "مبادرة رعاية الأيتام",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "130,000",
+    remaining: "20,000",
+    progress: 75,
+    image: "/images/charity/4.jpg",
+  },
+  {
+    title: "دعم الغارمين المتعثرين",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "250,000",
+    remaining: "50,000",
+    progress: 80,
+    image: "/images/charity/5.jpg",
+  },
+  {
+    title: "كسوة الشتاء للعائلات",
+    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
+    target: "80,000",
+    remaining: "5,000",
+    progress: 90,
+    image: "/images/charity/6.jpg",
+  }
 ];
 
-const initiativesByFilter: Record<string, typeof initiatives> = {
-  "مشاريع عامة": initiatives,
-  "مشاريع الإسكان": initiatives,
-  "كفالة الايتام": initiatives,
-  "العناية بالمساجد": initiatives,
-};
+const RiyalIcon = () => (
+  <svg
+    width="114"
+    height="14"
+    viewBox="0 0 114 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="inline-block w-auto h-3 align-middle"
+  >
+    <path
+      d="M6.67203 6.6V7.848C6.67203 10.26 5.49603 11.568 3.28803 11.568C0.948029 11.568 2.93255e-05 10.392 0.0120293 8.388C0.0240293 7.896 0.0960293 7.308 0.204029 6.72H1.04403C0.936029 7.26 0.864029 7.776 0.852029 8.208C0.840029 9.78 1.47603 10.608 3.28803 10.608C4.98003 10.608 5.83203 9.864 5.83203 7.86V7.44C5.24403 7.92 4.64403 8.112 3.93603 8.112C2.58003 8.112 1.82403 7.428 1.82403 6.048C1.82403 5.676 1.88403 5.244 2.01603 4.764H2.88003C2.73603 5.292 2.66403 5.7 2.66403 6.048C2.66403 6.78 3.13203 7.152 3.93603 7.152C4.64403 7.152 5.22003 6.912 5.83203 6.288V2.38419e-07H6.67203V5.244L8.00403 3.384C8.16003 3.144 8.32803 2.928 8.47203 2.736V2.38419e-07H9.31203V1.656C9.80403 1.116 10.188 0.852001 10.68 0.852001C11.592 0.852001 12.06 1.416 12.06 2.52H11.22C11.22 2.04 11.028 1.812 10.68 1.812C10.524 1.812 10.344 1.884 10.152 2.04C9.96003 2.196 9.68403 2.508 9.31203 2.988V6.816C9.31203 7.92 9.68403 8.316 10.752 8.316C11.82 8.316 12.168 7.836 12.168 6.78C12.168 6.264 12.096 5.532 11.964 4.62H12.84C12.948 5.4 13.008 6.168 13.008 6.78C13.008 8.496 12.288 9.276 10.752 9.276C9.16803 9.276 8.47203 8.496 8.47203 6.816V4.14L7.24803 5.844L6.67203 6.6ZM10.608 10.848C10.608 11.196 10.344 11.46 9.99603 11.46C9.64803 11.46 9.38403 11.196 9.38403 10.848C9.38403 10.5 9.64803 10.236 9.99603 10.236C10.344 10.236 10.608 10.5 10.608 10.848ZM12.192 10.848C12.192 11.196 11.928 11.46 11.58 11.46C11.232 11.46 10.968 11.196 10.968 10.848C10.968 10.5 11.232 10.236 11.58 10.236C11.928 10.236 12.192 10.5 12.192 10.848ZM64.9461 5.772C64.5261 5.772 64.1781 5.436 64.1781 5.004C64.1781 4.572 64.5261 4.236 64.9461 4.236C65.3661 4.236 65.7141 4.572 65.7141 5.004C65.7141 5.436 65.3661 5.772 64.9461 5.772ZM64.9461 9.336C64.5261 9.336 64.1781 9 64.1781 8.568C64.1781 8.136 64.5261 7.8 64.9461 7.8C65.3661 7.8 65.7141 8.136 65.7141 8.568C65.7141 9 65.3661 9.336 64.9461 9.336ZM77.2178 9.036L76.9778 9.276H76.7618C75.1778 9.276 74.1578 8.94 73.2458 8.076L73.2218 8.088C71.8298 8.664 70.9538 9.276 70.9538 10.368C70.9538 11.424 72.0458 12.06 73.8698 12.06C74.9858 12.06 76.1138 11.784 76.8458 11.46V12.396C76.0178 12.768 74.8898 13.02 73.8698 13.02C71.5178 13.02 70.1138 12.012 70.1138 10.368C70.1138 9.024 71.0738 8.208 72.6938 7.5C72.3458 7.104 72.0098 6.624 71.6378 6.084L70.7738 4.8V3.828C71.6498 3.552 72.6338 3.42 73.2698 3.42C75.2858 3.42 76.2458 3.96 76.2458 5.256C76.2458 6.204 75.5858 6.996 74.1578 7.68C74.8658 8.148 75.7178 8.316 76.9778 8.316H77.2178V9.036ZM71.6258 4.572L72.3818 5.7C72.7778 6.288 73.1618 6.78 73.5098 7.152L73.5938 7.116C74.8298 6.528 75.4058 5.964 75.4058 5.328C75.4058 4.644 74.7098 4.38 73.2698 4.38C72.8018 4.38 72.2858 4.428 71.6258 4.572ZM80.8094 8.316V9.036L80.5694 9.276C79.5254 9.276 78.9614 8.916 78.7814 8.148C78.6254 8.916 78.0254 9.276 76.9814 9.276V8.556L77.2214 8.316C78.1934 8.316 78.5774 7.884 78.5774 6.696V5.46H79.4174V6.696C79.4174 7.368 79.5134 7.812 79.7054 8.016C79.9094 8.22 80.2694 8.316 80.8094 8.316ZM80.1614 10.848C80.1614 11.196 79.8974 11.46 79.5494 11.46C79.2014 11.46 78.9374 11.196 78.9374 10.848C78.9374 10.5 79.2014 10.236 79.5494 10.236C79.8974 10.236 80.1614 10.5 80.1614 10.848ZM78.5774 10.848C78.5774 11.196 78.3134 11.46 77.9654 11.46C77.6174 11.46 77.3534 11.196 77.3534 10.848C77.3534 10.5 77.6174 10.236 77.9654 10.236C78.3134 10.236 78.5774 10.5 78.5774 10.848ZM88.7394 9.036L88.4994 9.276C87.8154 9.276 87.2514 8.94 86.7114 7.932C86.4354 8.844 85.6914 9.384 84.6354 9.384C83.5674 9.384 82.8474 8.808 82.7034 7.836C82.3074 8.988 81.6714 9.276 80.5674 9.276V8.556L80.8074 8.316C81.4914 8.316 81.8274 8.004 82.0794 7.344L82.4514 6.444C83.0274 5.1 83.7954 4.5 84.7554 4.5C85.7514 4.5 86.3994 4.944 87.1674 6.684L87.3114 7.008C87.7434 8.016 88.1154 8.316 88.7394 8.316V9.036ZM83.2434 7.08C83.2434 7.908 83.7714 8.424 84.6474 8.424C85.6554 8.424 86.2914 7.968 86.3514 7.188L86.3394 7.152L86.2074 6.84C85.7754 5.832 85.2834 5.46 84.6954 5.46C84.2634 5.46 83.9154 5.628 83.6394 5.952C83.3754 6.276 83.2434 6.648 83.2434 7.08ZM89.437 9.276H88.501V8.556L88.741 8.316H89.437C90.589 8.316 91.165 8.172 92.257 7.596L93.073 7.164C93.469 6.96 93.781 6.804 94.057 6.696C93.685 6.6 93.301 6.444 92.809 6.24L91.741 5.772C91.213 5.544 90.913 5.46 90.613 5.46C90.241 5.46 90.013 5.688 89.953 6.06H89.113C89.173 5.088 89.725 4.5 90.625 4.5C91.057 4.5 91.465 4.608 92.149 4.908L93.217 5.376C94.465 5.916 94.933 6.06 95.569 6.06H96.037V6.96H95.569C95.413 6.96 95.257 6.972 95.101 7.02V7.284C95.101 7.992 95.497 8.316 96.277 8.316V9.036L96.037 9.276C94.825 9.276 94.261 8.652 94.261 7.368L93.373 7.872L92.617 8.316C91.333 9.084 90.673 9.276 89.437 9.276ZM93.169 10.848C93.169 11.196 92.905 11.46 92.557 11.46C92.209 11.46 91.945 11.196 91.945 10.848C91.945 10.5 92.209 10.236 92.557 10.236C92.905 10.236 93.169 10.5 93.169 10.848ZM99.1921 3.192C99.1921 3.54 98.9281 3.804 98.5801 3.804C98.2321 3.804 97.9681 3.54 97.9681 3.192C97.9681 2.844 98.2321 2.58 98.5801 2.58C98.9281 2.58 99.1921 2.844 99.1921 3.192ZM97.6081 3.192C97.6081 3.54 97.3441 3.804 96.9961 3.804C96.6481 3.804 96.3841 3.54 96.3841 3.192C96.3841 2.844 96.6481 2.58 96.9961 2.58C97.3441 2.58 97.6081 2.844 97.6081 3.192ZM96.2761 9.276H96.0361V8.556L96.2761 8.316C97.3921 8.316 97.7401 7.836 97.7401 6.78C97.7401 6.264 97.6681 5.532 97.5361 4.62H98.4121C98.5201 5.4 98.5801 6.168 98.5801 6.78C98.5801 8.496 97.8601 9.276 96.2761 9.276ZM103.987 9.24V13.02H103.147V9.168C103.147 8.124 103.639 7.524 104.695 7.368V7.26C104.695 5.688 105.679 4.5 106.987 4.5C107.983 4.5 108.631 4.944 109.399 6.684L109.543 7.008C109.987 8.016 110.347 8.316 110.971 8.316V9.036L110.731 9.276C110.071 9.276 109.543 8.964 110.015 8.064C108.715 8.892 107.995 9.384 106.987 9.384C106.015 9.384 105.271 8.988 104.923 8.304C104.239 8.388 103.987 8.664 103.987 9.24ZM105.535 7.14C105.535 7.92 106.123 8.424 106.999 8.424C107.911 8.424 108.523 8.052 108.679 7.392L108.571 7.152L108.439 6.84C108.007 5.832 107.503 5.46 106.963 5.46C106.147 5.46 105.535 6.18 105.535 7.14ZM113.887 3.192C113.887 3.54 113.623 3.804 113.275 3.804C112.927 3.804 112.663 3.54 112.663 3.192C112.663 2.844 112.927 2.58 113.275 2.58C113.623 2.58 113.887 2.844 113.887 3.192ZM112.303 3.192C112.303 3.54 112.039 3.804 111.691 3.804C111.343 3.804 111.079 3.54 111.079 3.192C111.079 2.844 111.343 2.58 111.691 2.58C112.039 2.58 112.303 2.844 112.303 3.192ZM110.971 9.276H110.731V8.556L110.971 8.316C112.087 8.316 112.435 7.836 112.435 6.78C112.435 6.264 112.363 5.532 112.231 4.62H113.107C113.215 5.4 113.275 6.168 113.275 6.78C113.275 8.496 112.555 9.276 110.971 9.276Z"
+      fill="#717171"
+    />
+    <path
+      d="M20.5053 9.276H19.0293V2.688L17.2773 3.852V2.568L19.1853 1.236H20.5053V9.276ZM25.2983 9.276H23.8223V2.688L22.0703 3.852V2.568L23.9783 1.236H25.2983V9.276ZM29.8272 9.384C28.8792 9.384 28.1592 9.156 27.6912 8.7C27.2232 8.232 26.9592 7.656 26.8992 6.972H28.2792C28.3392 7.344 28.4832 7.656 28.6872 7.896C28.8912 8.136 29.2632 8.256 29.8032 8.256C30.7632 8.256 31.3272 7.608 31.3272 6.6C31.3272 5.628 30.7272 5.004 29.8032 5.004C28.9752 5.004 28.4592 5.28 28.0752 5.7H27.3312L27.3912 1.236H32.3472V2.388H28.5312L28.5192 4.596C28.8432 4.248 29.4192 3.924 30.2832 3.924C31.0272 3.924 31.6392 4.164 32.1072 4.656C32.5872 5.136 32.8272 5.796 32.8272 6.624C32.8272 8.316 31.5552 9.384 29.8272 9.384ZM35.7794 8.064L34.2074 10.752L33.3074 10.344L34.3994 7.512L35.7794 8.064ZM39.898 9.384C38.854 9.384 38.026 9.036 37.402 8.328C36.778 7.62 36.466 6.66 36.466 5.46V5.064C36.466 2.628 37.834 1.128 39.898 1.128C40.93 1.128 41.758 1.476 42.382 2.184C43.006 2.88 43.318 3.828 43.318 5.028V5.424C43.318 7.836 42.034 9.384 39.898 9.384ZM39.922 8.22C41.218 8.22 41.83 7.248 41.83 5.436V5.028C41.83 3.312 41.146 2.268 39.898 2.268C38.65 2.268 37.954 3.264 37.954 5.052V5.448C37.954 7.272 38.686 8.22 39.922 8.22ZM47.9487 9.384C46.9047 9.384 46.0767 9.036 45.4527 8.328C44.8287 7.62 44.5167 6.66 44.5167 5.46V5.064C44.5167 2.628 45.8847 1.128 47.9487 1.128C48.9807 1.128 49.8087 1.476 50.4327 2.184C51.0567 2.88 51.3687 3.828 51.3687 5.028V5.424C51.3687 7.836 50.0847 9.384 47.9487 9.384ZM47.9727 8.22C49.2687 8.22 49.8807 7.248 49.8807 5.436V5.028C49.8807 3.312 49.1967 2.268 47.9487 2.268C46.7007 2.268 46.0047 3.264 46.0047 5.052V5.448C46.0047 7.272 46.7367 8.22 47.9727 8.22ZM55.9995 9.384C54.9555 9.384 54.1275 9.036 53.5035 8.328C52.8795 7.62 52.5675 6.66 52.5675 5.46V5.064C52.5675 2.628 53.9355 1.128 55.9995 1.128C57.0315 1.128 57.8595 1.476 58.4835 2.184C59.1075 2.88 59.4195 3.828 59.4195 5.028V5.424C59.4195 7.836 58.1355 9.384 55.9995 9.384ZM56.0235 8.22C57.3195 8.22 57.9315 7.248 57.9315 5.436V5.028C57.9315 3.312 57.2475 2.268 56.0235 2.268C54.7515 2.268 54.0555 3.264 54.0555 5.052V5.448C54.0555 7.272 54.7875 8.22 56.0235 8.22Z"
+      fill="#EF9000"
+      fillOpacity="0.937255"
+    />
+  </svg>
+);
 
-export const CharityInitiatives = () => {
-  const [activeFilter, setActiveFilter] = useState("مشاريع عامة");
+const RiyalIconRemaining = () => (
+  <svg
+    width="87"
+    height="15"
+    viewBox="0 0 87 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="inline-block w-auto h-3 align-middle"
+  >
+    <path
+      d="M6.67179 6.6V7.848C6.67179 10.26 5.49579 11.568 3.28779 11.568C0.947785 11.568 -0.000214815 10.392 0.0117852 8.388C0.0237852 7.896 0.0957852 7.308 0.203785 6.72H1.04379C0.935785 7.26 0.863785 7.776 0.851785 8.208C0.839785 9.78 1.47579 10.608 3.28779 10.608C4.97979 10.608 5.83179 9.864 5.83179 7.86V7.44C5.24379 7.92 4.64379 8.112 3.93579 8.112C2.57979 8.112 1.82379 7.428 1.82379 6.048C1.82379 5.676 1.88379 5.244 2.01579 4.764H2.87979C2.73579 5.292 2.66379 5.7 2.66379 6.048C2.66379 6.78 3.13179 7.152 3.93579 7.152C4.64379 7.152 5.21979 6.912 5.83179 6.288V2.38419e-07H6.67179V5.244L8.00379 3.384C8.15979 3.144 8.32779 2.928 8.47179 2.736V2.38419e-07H9.31179V1.656C9.80379 1.116 10.1878 0.852001 10.6798 0.852001C11.5918 0.852001 12.0598 1.416 12.0598 2.52H11.2198C11.2198 2.04 11.0278 1.812 10.6798 1.812C10.5238 1.812 10.3438 1.884 10.1518 2.04C9.95979 2.196 9.68379 2.508 9.31179 2.988V6.816C9.31179 7.92 9.68379 8.316 10.7518 8.316C11.8198 8.316 12.1678 7.836 12.1678 6.78C12.1678 6.264 12.0958 5.532 11.9638 4.62H12.8398C12.9478 5.4 13.0078 6.168 13.0078 6.78C13.0078 8.496 12.2878 9.276 10.7518 9.276C9.16779 9.276 8.47179 8.496 8.47179 6.816V4.14L7.24779 5.844L6.67179 6.6ZM10.6078 10.848C10.6078 11.196 10.3438 11.46 9.99579 11.46C9.64779 11.46 9.38379 11.196 9.38379 10.848C9.38379 10.5 9.64779 10.236 9.99579 10.236C10.3438 10.236 10.6078 10.5 10.6078 10.848ZM12.1918 10.848C12.1918 11.196 11.9278 11.46 11.5798 11.46C11.2318 11.46 10.9678 11.196 10.9678 10.848C10.9678 10.5 11.2318 10.236 11.5798 10.236C11.9278 10.236 12.1918 10.5 12.1918 10.848ZM60.1529 5.772C59.7329 5.772 59.3849 5.436 59.3849 5.004C59.3849 4.572 59.7329 4.236 60.1529 4.236C60.5729 4.236 60.9209 4.572 60.9209 5.004C60.9209 5.436 60.5729 5.772 60.1529 5.772ZM60.1529 9.336C59.7329 9.336 59.3849 9 59.3849 8.568C59.3849 8.136 59.7329 7.8 60.1529 7.8C60.5729 7.8 60.9209 8.136 60.9209 8.568C60.9209 9 60.5729 9.336 60.1529 9.336ZM73.6846 10.128C73.6846 11.124 72.5086 12.048 69.6046 12.048C67.0606 12.048 65.8006 11.076 65.8006 9.144C65.8006 8.616 65.8606 8.04 65.9926 7.5H66.8326C66.7006 8.04 66.6406 8.544 66.6406 8.964C66.6406 10.392 67.6246 11.088 69.6046 11.088C70.8166 11.088 71.6566 10.98 72.1246 10.776C72.5926 10.572 72.8326 10.332 72.8326 10.056C72.8326 9.588 72.3526 9.276 71.5366 9.276H71.3086V8.316H74.0566V9.036L73.8166 9.276H73.3366C73.5406 9.516 73.6846 9.792 73.6846 10.128ZM71.0086 13.62C71.0086 13.968 70.7446 14.232 70.3966 14.232C70.0486 14.232 69.7846 13.968 69.7846 13.62C69.7846 13.272 70.0486 13.008 70.3966 13.008C70.7446 13.008 71.0086 13.272 71.0086 13.62ZM69.4246 13.62C69.4246 13.968 69.1606 14.232 68.8126 14.232C68.4646 14.232 68.2006 13.968 68.2006 13.62C68.2006 13.272 68.4646 13.008 68.8126 13.008C69.1606 13.008 69.4246 13.272 69.4246 13.62ZM78.3051 2.352C78.3051 2.7 78.0411 2.964 77.6931 2.964C77.3451 2.964 77.0811 2.7 77.0811 2.352C77.0811 2.004 77.3451 1.74 77.6931 1.74C78.0411 1.74 78.3051 2.004 78.3051 2.352ZM76.7211 2.352C76.7211 2.7 76.4571 2.964 76.1091 2.964C75.7611 2.964 75.4971 2.7 75.4971 2.352C75.4971 2.004 75.7611 1.74 76.1091 1.74C76.4571 1.74 76.7211 2.004 76.7211 2.352ZM74.5851 9.276H73.8171V8.556L74.0571 8.316H74.5851C74.9811 8.316 75.3531 8.304 75.6771 8.268C74.9931 7.752 74.5851 7.08 74.5851 6.312C74.5851 4.824 75.7371 3.78 76.9371 3.78C78.2451 3.78 79.1931 4.908 79.1931 6.216C79.1931 7.02 78.8331 7.728 78.1611 8.256C78.4851 8.292 78.8451 8.316 79.1931 8.316H79.7691V9.036L79.5291 9.276H79.1931C78.3651 9.276 77.5851 9.144 76.9251 8.916C76.2651 9.144 75.4851 9.276 74.5851 9.276ZM75.4251 6.252C75.4251 7.068 76.0251 7.68 77.0331 8.016C77.9451 7.716 78.3531 7.14 78.3531 6.336C78.3531 5.928 78.2211 5.556 77.9571 5.232C77.6931 4.908 77.3331 4.74 76.8891 4.74C75.9891 4.74 75.4251 5.496 75.4251 6.252ZM83.3522 8.316V9.036L83.1122 9.276C82.0682 9.276 81.5042 8.916 81.3242 8.148C81.1682 8.916 80.5682 9.276 79.5242 9.276V8.556L79.7642 8.316C80.7362 8.316 81.1202 7.884 81.1202 6.696V5.46H81.9602V6.696C81.9602 7.368 82.0562 7.812 82.2482 8.016C82.4522 8.22 82.8122 8.316 83.3522 8.316ZM81.9122 10.848C81.9122 11.196 81.6482 11.46 81.3002 11.46C80.9522 11.46 80.6882 11.196 80.6882 10.848C80.6882 10.5 80.9522 10.236 81.3002 10.236C81.6482 10.236 81.9122 10.5 81.9122 10.848ZM86.2661 3.192C86.2661 3.54 86.0021 3.804 85.6541 3.804C85.3061 3.804 85.0421 3.54 85.0421 3.192C85.0421 2.844 85.3061 2.58 85.6541 2.58C86.0021 2.58 86.2661 2.844 86.2661 3.192ZM84.6821 3.192C84.6821 3.54 84.4181 3.804 84.0701 3.804C83.7221 3.804 83.4581 3.54 83.4581 3.192C83.4581 2.844 83.7221 2.58 84.0701 2.58C84.4181 2.58 84.6821 2.844 84.6821 3.192ZM83.3501 9.276H83.1101V8.556L83.3501 8.316C84.4661 8.316 84.8141 7.836 84.8141 6.78C84.8141 6.264 84.7421 5.532 84.6101 4.62H85.4861C85.5941 5.4 85.6541 6.168 85.6541 6.78C85.6541 8.496 84.9341 9.276 83.3501 9.276Z"
+      fill="#717171"
+    />
+    <path
+      d="M20.5051 9.276H19.0291V2.688L17.2771 3.852V2.568L19.1851 1.236H20.5051V9.276ZM25.034 9.384C24.086 9.384 23.366 9.156 22.898 8.7C22.43 8.232 22.166 7.656 22.106 6.972H23.486C23.546 7.344 23.69 7.656 23.894 7.896C24.098 8.136 24.47 8.256 25.01 8.256C25.97 8.256 26.534 7.608 26.534 6.6C26.534 5.628 25.934 5.004 25.01 5.004C24.182 5.004 23.666 5.28 23.282 5.7H22.538L22.598 1.236H27.554V2.388H23.738L23.726 4.596C24.05 4.248 24.626 3.924 25.49 3.924C26.234 3.924 26.846 4.164 27.314 4.656C27.794 5.136 28.034 5.796 28.034 6.624C28.034 8.316 26.762 9.384 25.034 9.384ZM30.9862 8.064L29.4142 10.752L28.5142 10.344L29.6062 7.512L30.9862 8.064ZM35.1048 9.384C34.0608 9.384 33.2328 9.036 32.6088 8.328C31.9848 7.62 31.6728 6.66 31.6728 5.46V5.064C31.6728 2.628 33.0408 1.128 35.1048 1.128C36.1368 1.128 36.9648 1.476 37.5888 2.184C38.2128 2.88 38.5248 3.828 38.5248 5.028V5.424C38.5248 7.836 37.2408 9.384 35.1048 9.384ZM35.1288 8.22C36.4248 8.22 37.0368 7.248 37.0368 5.436V5.028C37.0368 3.312 36.3528 2.268 35.1048 2.268C33.8568 2.268 33.1608 3.264 33.1608 5.052V5.448C33.1608 7.272 33.8928 8.22 35.1288 8.22ZM43.1555 9.384C42.1115 9.384 41.2835 9.036 40.6595 8.328C40.0355 7.62 39.7235 6.66 39.7235 5.46V5.064C39.7235 2.628 41.0915 1.128 43.1555 1.128C44.1875 1.128 45.0155 1.476 45.6395 2.184C46.2635 2.88 46.5755 3.828 46.5755 5.028V5.424C46.5755 7.836 45.2915 9.384 43.1555 9.384ZM43.1795 8.22C44.4755 8.22 45.0875 7.248 45.0875 5.436V5.028C45.0875 3.312 44.4035 2.268 43.1555 2.268C41.9075 2.268 41.2115 3.264 41.2115 5.052V5.448C41.2115 7.272 41.9435 8.22 43.1795 8.22ZM51.2063 9.384C50.1623 9.384 49.3343 9.036 48.7103 8.328C48.0863 7.62 47.7743 6.66 47.7743 5.46V5.064C47.7743 2.628 49.1423 1.128 51.2063 1.128C52.2383 1.128 53.0663 1.476 53.6903 2.184C54.3143 2.88 54.6263 3.828 54.6263 5.028V5.424C54.6263 7.836 53.3423 9.384 51.2063 9.384ZM51.2303 8.22C52.5263 8.22 53.1383 7.248 53.1383 5.436V5.028C53.1383 3.312 52.4543 2.268 51.2063 2.268C49.9583 2.268 49.2623 3.264 49.2623 5.052V5.448C49.2623 7.272 49.9943 8.22 51.2303 8.22Z"
+      fill="#EF9000"
+      fillOpacity="0.937255"
+    />
+  </svg>
+);
+
+export default function CharityInitiatives() {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [pressedArrow, setPressedArrow] = useState("");
-  // اتجاه الحركة: 1 = جاي من اليمين (next)، -1 = جاي من الشمال (prev)
-  const [direction, setDirection] = useState(1);
 
-  const currentInitiatives = initiativesByFilter[activeFilter] ?? initiatives;
-  const displayData = [...currentInitiatives, ...currentInitiatives];
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(initiatives.length / itemsPerPage);
 
   const handleNext = () => {
     setPressedArrow("next");
-    setDirection(1);
-    const currentIndex = filters.indexOf(activeFilter);
-    const nextIndex = (currentIndex + 1) % filters.length;
-    setActiveFilter(filters[nextIndex]);
-    setTimeout(() => setPressedArrow(""), 200);
+    setCurrentIndex((prev) => (prev + itemsPerPage >= initiatives.length ? 0 : prev + itemsPerPage));
+    setTimeout(() => setPressedArrow(""), 400);
   };
 
   const handlePrev = () => {
     setPressedArrow("prev");
-    setDirection(-1);
-    const currentIndex = filters.indexOf(activeFilter);
-    const prevIndex = (currentIndex - 1 + filters.length) % filters.length;
-    setActiveFilter(filters[prevIndex]);
-    setTimeout(() => setPressedArrow(""), 200);
+    setCurrentIndex((prev) => (prev - itemsPerPage < 0 ? Math.max(0, initiatives.length - itemsPerPage) : prev - itemsPerPage));
+    setTimeout(() => setPressedArrow(""), 400);
   };
 
-  const pageVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 60 : -60,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -60 : 60,
-      opacity: 0,
-    }),
-  };
+  // تقليب الكاردز وتغييرها تلقائياً كل 4 ثوانٍ
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPressedArrow("next");
+      setCurrentIndex((prev) => (prev + itemsPerPage >= initiatives.length ? 0 : prev + itemsPerPage));
+      setTimeout(() => setPressedArrow(""), 400);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentInitiatives = initiatives.slice(currentIndex, currentIndex + itemsPerPage);
 
   return (
     <section
-      className="relative w-full px-4 overflow-hidden text-white py-14 md:px-20"
+      className="relative w-full overflow-hidden text-white py-[60px] px-4 sm:px-8 lg:px-[80px]"
       style={{
-        backgroundImage: "url('/images/desert.jpg')",
+        backgroundImage: `
+          linear-gradient(0deg, rgba(160, 160, 160, 0.75), rgba(160, 160, 160, 0.75)),
+          linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)),
+          linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+          url('/images/desert.jpg')
+        `,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundBlendMode: "multiply, overlay, overlay, normal",
       }}
     >
-      <div className="absolute inset-0 z-0"></div>
-      <div className="relative z-10 max-w-[1440px] mx-auto">
-        <div className="flex flex-col items-center justify-between gap-6 mb-10 md:flex-row">
-          <div className="flex flex-col items-start gap-4">
-            <div className="flex items-center gap-0">
-              <div className="w-8 h-[1px] bg-white" />
-              <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden">
-                <Image
-                  src="/images/logo.png"
-                  alt="Icon"
-                  fill
-                  className="object-contain p-1"
-                />
+      <div className="max-w-[1440px] mx-auto w-full">
+        <div className="max-w-[1280px] mx-auto flex flex-col gap-[56px] py-[10px]">
+          {/* رأس السكشن */}
+          <div className="flex flex-col items-start justify-between gap-6 xl:flex-row xl:items-end">
+            <div className="flex flex-col items-start gap-4">
+              <div className="flex items-center gap-0">
+                <div className="w-8 h-[1px] bg-white" />
+                <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Icon"
+                    fill
+                    className="object-contain p-1"
+                  />
+                </div>
+                <span className="text-xs font-bold text-white">
+                  العطاء المستمر
+                </span>
               </div>
-              <span className="text-xs font-bold text-white">
-                العطاء المستمر
-              </span>
+              <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-6xl">
+                المبادرات الخيرية للأسرة
+              </h2>
             </div>
-            <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-6xl">
-              المبادرات الخيرية للأسرة
-            </h2>{" "}
+
+            {/* زر التبرع في الأعلى */}
+            <button className="w-full xl:w-[250px] h-[56px] pt-[12px] pb-[12px] pr-[24px] pl-[8px] gap-[12px] rounded-[8px] flex items-center justify-between font-semibold text-black transition bg-white hover:bg-gray-100 shrink-0">
+              <span className="text-sm truncate sm:text-base">
+                عرض منصة إحسان للتبرع
+              </span>
+              <span className="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-[#1D1D1B] shrink-0">
+                <ArrowUpLeft className="w-4 h-4 text-white" />
+              </span>
+            </button>
           </div>
 
-          <div className="items-center justify-center hidden gap-2 p-2 xl:flex bg-[#FFFFFF59]">
-            {filters.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
-                className={cn(
-                  "px-8 py-4 text-sm font-semibold transition-all whitespace-nowrap",
-                  activeFilter === f
-                    ? "bg-[#FFFFFFE5] text-[#EF9000]"
-                    : "bg-[#FFFFFF5D] text-white hover:bg-[#FFFFFF66]",
-                )}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative mb-10 overflow-hidden">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={activeFilter}
-              custom={direction}
-              variants={pageVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-            >
-              {displayData.map((item, i) => (
+          {/* شبكة الكاردز (تظهر 6 كاردز فقط وتتغير مع الوقت أو الأزرار) */}
+          <div className="relative overflow-hidden">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {currentInitiatives.map((item, i) => (
                 <div
-                  key={i}
-                  className="flex flex-col p-3 overflow-hidden text-black bg-white rounded-3xl"
+                  key={currentIndex + i}
+                  className="flex flex-col p-3 overflow-hidden text-black transition-all duration-500 bg-white rounded-lg shadow-lg"
                 >
-                  <div className="relative w-full h-[200px] rounded-2xl overflow-hidden mb-4">
+                  <div className="relative w-full h-[148px] rounded-lg overflow-hidden mb-4">
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -169,86 +247,113 @@ export const CharityInitiatives = () => {
                   <div className="flex flex-col flex-grow px-2 text-right">
                     <h3 className="mb-2 text-lg font-medium">{item.title}</h3>
                     <p className="mb-6 text-sm text-gray-500">{item.desc}</p>
+                    <div className="w-full mb-4 border-b border-gray-200" />
+
                     <div className="flex justify-between mb-2 text-xs text-gray-500">
-                      <span>
-                        تم تجميع :{" "}
-                        <span className="font-medium text-[#f0a23c] mx-1">
-                          {item.target}
-                        </span>
-                        <span className="text-[#717171] italic font-medium">
-                          ريال
-                        </span>
+                      <span className="font-normal text-gray-500">
+                        <RiyalIcon />
                       </span>
-                      <span>
-                        تبقي :{" "}
-                        <span className="font-medium text-[#f0a23c] mx-1">
-                          {item.remaining}
-                        </span>
-                        <span className="text-[#717171] italic font-medium">
-                          ريال
-                        </span>
+                      <span className="font-normal text-gray-500">
+                        <RiyalIconRemaining />
                       </span>
                     </div>
+
                     <div className="relative w-full h-3 mb-6 overflow-hidden bg-orange-100 rounded-full">
                       <div
                         className="bg-[#f0a23c] h-full"
                         style={{ width: `${item.progress}%` }}
                       />
-                      <span className="absolute top-[-2px] left-[85%] text-[10px] font-bold text-white bg-[#f0a23c] px-1 rounded-full translate-x-[-50%]">
+                      <span className="absolute top-[-1px] left-[85%] text-[10px] font-bold text-white bg-[#f0a23c] px-1 rounded-full translate-x-[-50%]">
                         {item.progress}%
                       </span>
                     </div>
+
                     <button className="flex items-center w-full px-2 py-3 mb-4 font-bold text-white transition bg-black rounded-xl hover:bg-gray-800">
                       <span className="flex-1 text-center">
                         تبرع الآن عبر المنصة
                       </span>
-                      <span className="flex items-center justify-center p-1 bg-[#f0a23c] rounded-md w-10 h-7">
+                      <span className="flex items-center justify-center p-1 bg-[#f0a23c] rounded-md w-10 h-9">
                         <ArrowUpLeft className="w-4 h-4" />
                       </span>
                     </button>
                   </div>
                 </div>
               ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="flex flex-col-reverse items-center justify-between gap-6 mt-10 md:flex-row md:gap-0">
-          {/* 1. الأسهم في الجهة اليسرى (تظهر تحت في الموبايل) */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handlePrev}
-              className={cn(
-                "flex items-center justify-center w-12 h-12 transition-all rounded-xl",
-                pressedArrow === "prev"
-                  ? "bg-[#323232]"
-                  : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]",
-              )}
-            >
-              <ArrowRight className="w-6 h-6 text-white" />
-            </button>
-            <button
-              onClick={handleNext}
-              className={cn(
-                "flex items-center justify-center w-12 h-12 transition-all rounded-xl",
-                pressedArrow === "next"
-                  ? "bg-[#323232]"
-                  : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]",
-              )}
-            >
-              <ArrowLeft className="w-6 h-6 text-white" />
-            </button>
+            </div>
           </div>
 
-          {/* 3. زر منصة إحسان (يظهر فوق في الموبايل) */}
-          <button className="flex items-center justify-center w-full gap-2 px-6 py-4 font-bold text-black transition bg-white rounded-xl hover:bg-gray-100 md:w-auto">
-            عرض منصة إحسان للتبرع
-            <span className="flex items-center justify-center p-1 bg-[#1D1D1B] rounded-md w-10 h-7">
-              <ArrowUpLeft className="w-4 h-4 text-white" />
-            </span>
-          </button>
+          {/* الموبايل: الأسهم + قلب واحد */}
+          <div className="flex flex-col items-center justify-center gap-4 mt-4 lg:hidden">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handlePrev}
+                className={cn(
+                  "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
+                  pressedArrow === "prev"
+                    ? "bg-[#f0a23c] scale-90"
+                    : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                )}
+              >
+                <ArrowRight className="w-6 h-6 text-white" />
+              </button>
+              <button
+                onClick={handleNext}
+                className={cn(
+                  "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
+                  pressedArrow === "next"
+                    ? "bg-[#f0a23c] scale-90"
+                    : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                )}
+              >
+                <ArrowLeft className="w-6 h-6 text-white" />
+              </button>
+            </div>
+            <Heart className="w-6 h-6 text-white fill-white shrink-0" />
+          </div>
+
+          {/* الشاشات الكبيرة: الأسهم والقلوب موزعة */}
+          <div className="hidden grid-cols-1 gap-4 mt-4 lg:grid md:grid-cols-2 lg:grid-cols-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handlePrev}
+                  className={cn(
+                    "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
+                    pressedArrow === "prev"
+                      ? "bg-[#f0a23c] scale-90"
+                      : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                  )}
+                >
+                  <ArrowRight className="w-6 h-6 text-white" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className={cn(
+                    "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
+                    pressedArrow === "next"
+                      ? "bg-[#f0a23c] scale-90"
+                      : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                  )}
+                >
+                  <ArrowLeft className="w-6 h-6 text-white" />
+                </button>
+              </div>
+
+              <div className="flex items-center justify-end">
+                <Heart className="w-6 h-6 text-white fill-white shrink-0" />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end">
+              <Heart className="w-6 h-6 text-white fill-white shrink-0" />
+            </div>
+
+            <div className="flex items-center justify-end">
+              <Heart className="w-6 h-6 text-white fill-white shrink-0" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-};
+}

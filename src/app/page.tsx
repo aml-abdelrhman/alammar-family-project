@@ -5,8 +5,9 @@ import { DigitalLibrary } from "@/components/pages/Home/DigitalLibrary";
 import { QuranFigures } from "@/components/pages/Home/QuranFigures";
 import { ConnectedPrinces } from "@/components/pages/Home/ConnectedPrincess";
 import { ScholarsSection } from "@/components/pages/Home/ScholarsSection";
-import { CharityInitiatives } from "@/components/pages/Home/CharityInitiatives";
+import  CharityInitiatives  from "@/components/pages/Home/CharityInitiatives";
 import { QuranMemorySection } from "@/components/pages/Home/QuranMemorySection";
+import { ContactBanner } from "@/components/pages/Home/ContactBanner";
 
 const HomePage = async () => {
   return (
@@ -14,15 +15,17 @@ const HomePage = async () => {
       <Hero />
       
       {/* استخدمنا scroll-mt-24 لضمان أن القسم لا يختفي خلف الـ Navbar الثابت عند الانتقال */}
-      <div id="ushaiger" className="scroll-mt-20"><UshaigerHeritage /></div>
       <div id="village" className="scroll-mt-20"><AlQaraeenVillage /></div>
-      <div id="figures" className="scroll-mt-20"><QuranFigures /></div>
+            <div id="ushaiger" className="scroll-mt-20"><UshaigerHeritage /></div>
+
+      {/* <div id="figures" className="scroll-mt-20"><QuranFigures /></div> */}
       <div id="princes" className="scroll-mt-20"><ConnectedPrinces /></div>
       <div id="scholars" className="scroll-mt-20"><ScholarsSection /></div>
       <div id="charity" className="scroll-mt-20"><CharityInitiatives /></div>
       <div id="library" className="scroll-mt-20"><DigitalLibrary /></div>
-      
-      <QuranMemorySection />
+
+      <ContactBanner />
+      {/* <QuranMemorySection /> */}
     </main>
   );
 };

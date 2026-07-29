@@ -12,14 +12,16 @@ import {
 } from "@/components/ui/carousel";
 
 const scholars = [
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً..", tags: ["علم الفقه", "علم الحديث"], image: "/images/scholars/1.jpg" },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً..", tags: ["علم الفقه", "علم الحديث"], image: "/images/scholars/2.jpg" },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً..", tags: ["علم الفقه", "علم الحديث"], image: "/images/scholars/2.jpg" },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً..", tags: ["علم الفقه", "علم الحديث"], image: "/images/scholars/1.jpg" },
+  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
+  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
+  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
+  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
+  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
+  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
 ];
 
 const REPEAT_COUNT = 4;
-const slides = Array.from({ length: REPEAT_COUNT }, () => scholars);
+const slides = Array.from({ length: REPEAT_COUNT }, () => scholars.slice(0, 6));
 
 export const ScholarsSection = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -43,39 +45,53 @@ export const ScholarsSection = () => {
   };
 
   return (
-    <section className="w-full px-4 bg-white py-14 md:px-20">
-      <div className="max-w-[1500px] mx-auto">
-        <div className="flex flex-col items-start justify-between gap-6 mb-10 md:flex-row">
-          <div className="flex flex-col items-start text-right">
-            <div className="flex items-center gap-0 mb-3 md:mb-4">
+    // Outer Section: Width 1440px max, Padding Top/Bottom 60px, Left/Right 80px (lg:px-[80px] lg:py-[60px])
+    <section className="w-full bg-white py-10 lg:py-[60px] px-4 sm:px-8 lg:px-[80px]">
+      {/* Inner Content: Width 1280px max, Height ~593px (Min-height on desktop), Gap 56px between Header & Carousel */}
+      <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-[56px]">
+        
+        {/* Header Section */}
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div className="flex flex-col items-start max-w-2xl text-right">
+            <div className="flex items-center gap-2 mb-3">
               <div className="w-8 md:w-10 h-[1px] bg-[#723F00]" />
-              <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 md:w-8 md:h-8">
-                <Image src="/images/icon.png" alt="Icon" fill className="object-contain p-1" />
+              <div className="relative flex items-center justify-center w-6 h-6 overflow-hidden md:w-7 md:h-7">
+                <Image src="/images/icon.png" alt="Icon" fill className="object-contain" />
               </div>
-              <span className="text-[11px] md:text-xs font-bold text-[#723F00]">أهل العلم</span>
+              <span className="text-xs md:text-sm font-bold text-[#723F00]">أهل العلم</span>
             </div>
-            <h2 className="mb-3 text-3xl font-bold text-black md:mb-4 sm:text-4xl md:text-6xl">العلماء وطلبة العلم</h2>
-            <p className="text-xs font-normal text-[#525252] sm:text-sm">
+            <h2 className="mb-3 text-2xl font-bold text-black sm:text-3xl md:text-4xl">
+              العلماء وطلبة العلم
+            </h2>
+            <p className="text-xs sm:text-sm font-normal text-[#525252] leading-relaxed">
               توثيق لمسيرة أبناء العائلة من العلماء وطلبة العلم الشرعي، ومجالات تخصصهم وأثرهم العلمي.
             </p>
           </div>
 
-          <div className="flex justify-center w-full gap-2 mt-5 md:w-auto md:justify-end md:mt-0">
+          {/* Nav Buttons */}
+          <div className="flex items-center self-end gap-2 md:self-auto shrink-0">
             <button
               onClick={handlePrev}
-              className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 transition-colors ${pressedArrow === "prev" ? "bg-[#323232]" : "bg-gray-300"}`}
+              className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg transition-colors ${
+                pressedArrow === "prev" ? "bg-[#323232] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+              }`}
+              aria-label="Previous slide"
             >
-              <ArrowRight className="w-4 h-4 text-white md:w-5 md:h-5" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
             <button
               onClick={handleNext}
-              className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 transition-colors ${pressedArrow === "next" ? "bg-[#323232]" : "bg-gray-300"}`}
+              className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg transition-colors ${
+                pressedArrow === "next" ? "bg-[#323232] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+              }`}
+              aria-label="Next slide"
             >
-              <ArrowLeft className="w-4 h-4 text-white md:w-5 md:h-5" />
+              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
         </div>
 
+        {/* Carousel Content Container */}
         <Carousel
           setApi={setApi}
           plugins={[autoplayRef.current]}
@@ -85,29 +101,33 @@ export const ScholarsSection = () => {
           <CarouselContent>
             {slides.map((group, slideIdx) => (
               <CarouselItem key={slideIdx} className="basis-full">
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {/* 3 Columns Grid with Gap 24px - 40px */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[24px]">
                   {group.map((item, i) => (
                     <div
                       key={i}
-                      className="flex bg-[#F8F5F0] rounded-2xl p-4 h-[220px] items-center w-full gap-4"
+                      className="flex flex-col justify-between bg-[#F8F5F0] rounded-2xl p-5 sm:p-6 h-auto w-full gap-4 border border-[#EFE9DF]"
                     >
-                      {/* قمت بنقل الصورة لتكون في البداية (قبل النص) */}
-                      <div className="relative w-[120px] sm:w-[262px] h-full rounded-xl overflow-hidden shrink-0">
-                        <Image src={item.image} alt={item.name} fill className="object-cover" />
-                      </div>
-                      
-                      <div className="flex flex-col justify-center flex-1 h-full text-right">
-                        <p className="mb-1 text-lg font-bold text-black">
-                          {item.name}
-                          <span className="mx-1 text-[#733F00] text-sm font-normal">—</span>
-                          <span className="text-[#733F00] text-sm font-normal">{item.role}</span>
+                      <div className="flex flex-col text-right">
+                        <p className="flex flex-wrap items-center justify-start gap-1 mb-2 text-base font-bold text-black sm:text-lg">
+                          <span>{item.name}</span>
+                          <span className="text-[#733F00] font-normal">—</span>
+                          <span className="text-[#733F00] text-xs sm:text-sm font-normal">{item.role}</span>
                         </p>
-                        <p className="mb-4 text-sm leading-relaxed text-gray-600">{item.desc}</p>
-                        <div className="flex gap-2">
-                          {item.tags.map((tag, idx) => (
-                            <span key={idx} className="px-3 py-2 text-xs text-gray-700 bg-white border border-gray-200 rounded-xl">{tag}</span>
-                          ))}
-                        </div>
+                        <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                          {item.desc}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2 pt-2 mt-auto">
+                        {item.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="px-3 py-1.5 text-xs text-gray-700 bg-white border border-gray-200 rounded-xl"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   ))}

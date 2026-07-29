@@ -15,18 +15,34 @@ export const Hero = () => {
     { title: "المستقر", value: "القرين، الوشم" },
   ];
 
+  const bottomColors = [
+    "#E96642",
+    "#F7A144",
+    "#F3C68F",
+    "#E96642",
+    "#F7A144",
+    "#F3C68F",
+    "#E96642",
+  ];
+
   return (
     <>
-      <section className="relative flex items-end md:items-center justify-start w-full h-screen min-h-[550px] md:min-h-[900px] overflow-hidden pb-24 md:pb-0">
+      <section className="relative flex items-end md:items-center justify-start w-full h-screen min-h-[550px] md:min-h-[900px] overflow-hidden pb-24 md:pb-17 rounded-t-[32px]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero-img.png"
             alt="Al-Ammar Family Heritage"
             fill
-            className="object-cover object-top"
+            className="object-cover scale-[1.11] translate-y-[-5.5%]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/30 to-black/40" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(0, 0, 0, 0.136) -2.43%, rgba(0, 0, 0, 0.68) 87.93%)",
+            }}
+          />
         </div>
 
         <div className="w-full px-4 md:pr-20 lg:pt-24">
@@ -56,7 +72,7 @@ export const Hero = () => {
                 onClick={() => setIsInterestModalOpen(true)}
                 className="flex items-center h-auto gap-2 md:gap-3 py-1.5 md:py-2 pl-1.5 md:pl-2 pr-4 md:pr-6 text-sm md:text-base font-bold text-black transition-all duration-300 bg-white shadow-xl rounded-xl hover:bg-gray-100"
               >
-                عرض المكتبة
+                استكشف التراث
                 <span className="flex items-center justify-center bg-black rounded-xl w-7 h-7 md:w-9 md:h-9">
                   <ArrowUpLeft className="w-3.5 h-3.5 md:w-4 md:h-4 text-white" />
                 </span>
@@ -66,7 +82,7 @@ export const Hero = () => {
                 size="lg"
                 className="flex items-center h-auto gap-2 md:gap-3 py-1.5 md:py-2 pr-4 md:pr-6 pl-1.5 md:pl-2 text-sm md:text-base font-bold text-white transition-all duration-300 bg-[#F0A23C] shadow-xl rounded-xl hover:bg-[#d88f30]"
               >
-                استكشف التراث
+                عرض المكتبة
                 <span className="flex items-center justify-center bg-white rounded-xl w-7 h-7 md:w-9 md:h-9">
                   <ArrowUpLeft className="w-3.5 h-3.5 md:w-4 md:h-4 text-black" />
                 </span>
@@ -74,14 +90,24 @@ export const Hero = () => {
             </div>
           </div>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 z-20 flex flex-row items-start w-full h-[4px] p-0">
+          {bottomColors.map((color, index) => (
+            <div
+              key={index}
+              style={{ backgroundColor: color }}
+              className="flex-1 h-full"
+            />
+          ))}
+        </div>
       </section>
 
       <section className="w-full px-4 py-10 bg-white md:px-10">
-        <div className="grid w-full grid-cols-2 md:grid-cols-5 gap-[4px] max-w-[1500px] mx-auto rounded-xl overflow-hidden shadow-sm h-auto">
+        <div className="grid w-full grid-cols-2 md:grid-cols-5 gap-[4px] max-w-[1440px] mx-auto rounded-xl overflow-hidden shadow-sm h-auto">
           {stats.map((item, i) => (
             <div
               key={i}
-              className="h-[120px] md:h-[160px] lg:h-[200px] bg-[#F7F2EA] flex flex-col items-end justify-center pr-4 md:pr-6"
+              className="h-[120px] md:h-[160px] lg:h-[177px] bg-[#F7F2EA] flex flex-col items-end justify-center pr-4 md:pr-6"
             >
               <div className="flex items-center justify-start w-full gap-2 mb-1">
                 <div className="w-4 h-[1px] bg-[#733F00]"></div>
@@ -95,7 +121,8 @@ export const Hero = () => {
             </div>
           ))}
 
-          <div className="relative col-span-2 md:col-span-1 row-span-1 md:row-span-1 h-[180px] md:h-[200px] bg-[#F7F2EA] overflow-hidden flex items-center justify-center rounded-l-xl">
+          {/* تعديل ارتفاع وحجم بطاقة العلم في التابلت لتتطابق مع باقي الـ stats */}
+          <div className="relative col-span-2 md:col-span-1 row-span-1 md:row-span-1 h-[180px] md:h-[160px] lg:h-[177px] bg-[#F7F2EA] overflow-hidden flex items-center justify-center rounded-l-xl">
             <style jsx>{`
               @keyframes slideRight {
                 0% {
