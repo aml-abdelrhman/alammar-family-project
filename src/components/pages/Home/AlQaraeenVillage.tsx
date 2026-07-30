@@ -21,7 +21,10 @@ export const AlQaraeenVillage = () => {
   ];
 
   return (
-    <section className="relative w-full py-[60px] overflow-hidden border-t border-b border-[#c7c7cf] bg-[#F5EFE5]">
+    <section className="relative w-full py-[60px] overflow-hidden border-t  border-[#c7c7cf] "
+     style={{
+        background: `linear-gradient(0deg, #F7F2EA, #F7F2EA), linear-gradient(180deg, rgba(242, 231, 204, 0) 67.82%, rgba(245, 237, 219, 0.9) 94.11%, #F7F2EA 100%)`,
+      }}>
       <div className="absolute top-0 left-0 w-full h-24 pointer-events-none" />
 
       <div className="w-full max-w-[1440px] mx-auto px-[20px] md:px-[60px] lg:px-[80px]">
@@ -46,9 +49,9 @@ export const AlQaraeenVillage = () => {
             <div className="w-full">
               <div className="flex items-center gap-1.5 mb-4">
                 <div className="w-10 h-[1px] bg-[#723F00]" />
-                <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden">
+                {/* <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden">
                   <Image src="/images/icon.png" alt="Icon" fill className="object-contain p-1" />
-                </div>
+                </div> */}
                 <span className="text-xs font-normal text-[#723F00]">الإقليم</span>
               </div>
 

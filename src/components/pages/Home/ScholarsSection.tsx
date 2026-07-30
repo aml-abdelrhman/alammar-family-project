@@ -12,12 +12,42 @@ import {
 } from "@/components/ui/carousel";
 
 const scholars = [
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
-  { name: "الاسم الكريم", role: "طالب علم", desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.", tags: ["علم الفقه", "علم الحديث"] },
+  {
+    name: "الاسم الكريم",
+    role: "طالب علم",
+    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
+    tags: ["علم الفقه", "علم الحديث"],
+  },
+  {
+    name: "الاسم الكريم",
+    role: "طالب علم",
+    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
+    tags: ["علم الفقه", "علم الحديث"],
+  },
+  {
+    name: "الاسم الكريم",
+    role: "طالب علم",
+    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
+    tags: ["علم الفقه", "علم الحديث"],
+  },
+  {
+    name: "الاسم الكريم",
+    role: "طالب علم",
+    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
+    tags: ["علم الفقه", "علم الحديث"],
+  },
+  {
+    name: "الاسم الكريم",
+    role: "طالب علم",
+    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
+    tags: ["علم الفقه", "علم الحديث"],
+  },
+  {
+    name: "الاسم الكريم",
+    role: "طالب علم",
+    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
+    tags: ["علم الفقه", "علم الحديث"],
+  },
 ];
 
 const REPEAT_COUNT = 4;
@@ -25,13 +55,15 @@ const slides = Array.from({ length: REPEAT_COUNT }, () => scholars.slice(0, 6));
 
 export const ScholarsSection = () => {
   const [api, setApi] = useState<CarouselApi>();
-  const [pressedArrow, setPressedArrow] = useState<"next" | "prev" | null>(null);
+  const [pressedArrow, setPressedArrow] = useState<"next" | "prev" | null>(
+    null,
+  );
 
   const autoplayRef = useRef(
     Autoplay({
       delay: 4000,
       stopOnInteraction: false,
-    })
+    }),
   );
 
   const handleNext = () => {
@@ -49,22 +81,24 @@ export const ScholarsSection = () => {
     <section className="w-full bg-white py-10 lg:py-[60px] px-4 sm:px-8 lg:px-[80px]">
       {/* Inner Content: Width 1280px max, Height ~593px (Min-height on desktop), Gap 56px between Header & Carousel */}
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-[56px]">
-        
         {/* Header Section */}
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="flex flex-col items-start max-w-2xl text-right">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 md:w-10 h-[1px] bg-[#723F00]" />
-              <div className="relative flex items-center justify-center w-6 h-6 overflow-hidden md:w-7 md:h-7">
+              {/* <div className="relative flex items-center justify-center w-6 h-6 overflow-hidden md:w-7 md:h-7">
                 <Image src="/images/icon.png" alt="Icon" fill className="object-contain" />
-              </div>
-              <span className="text-xs md:text-sm font-bold text-[#723F00]">أهل العلم</span>
+              </div> */}
+              <span className="text-xs md:text-sm font-normal text-[#723F00]">
+                اهل العلم
+              </span>
             </div>
-            <h2 className="mb-3 text-2xl font-bold text-black sm:text-3xl md:text-4xl">
-              العلماء وطلبة العلم
+            <h2 className="w-full text-right font-bold text-[36px] sm:text-[45px] md:text-[60px] leading-[139%] text-[#201912] mb-3">
+              المشائخ وطلبة العلم
             </h2>
             <p className="text-xs sm:text-sm font-normal text-[#525252] leading-relaxed">
-              توثيق لمسيرة أبناء العائلة من العلماء وطلبة العلم الشرعي، ومجالات تخصصهم وأثرهم العلمي.
+              توثيق لمسيرة أبناء العائلة من العلماء وطلبة العلم الشرعي، ومجالات
+              تخصصهم وأثرهم العلمي.
             </p>
           </div>
 
@@ -73,7 +107,9 @@ export const ScholarsSection = () => {
             <button
               onClick={handlePrev}
               className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg transition-colors ${
-                pressedArrow === "prev" ? "bg-[#323232] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                pressedArrow === "prev"
+                  ? "bg-[#323232] text-white"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
               }`}
               aria-label="Previous slide"
             >
@@ -82,7 +118,9 @@ export const ScholarsSection = () => {
             <button
               onClick={handleNext}
               className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-lg transition-colors ${
-                pressedArrow === "next" ? "bg-[#323232] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                pressedArrow === "next"
+                  ? "bg-[#323232] text-white"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
               }`}
               aria-label="Next slide"
             >
@@ -112,7 +150,9 @@ export const ScholarsSection = () => {
                         <p className="flex flex-wrap items-center justify-start gap-1 mb-2 text-base font-bold text-black sm:text-lg">
                           <span>{item.name}</span>
                           <span className="text-[#733F00] font-normal">—</span>
-                          <span className="text-[#733F00] text-xs sm:text-sm font-normal">{item.role}</span>
+                          <span className="text-[#733F00] text-xs sm:text-sm font-normal">
+                            {item.role}
+                          </span>
                         </p>
                         <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
                           {item.desc}

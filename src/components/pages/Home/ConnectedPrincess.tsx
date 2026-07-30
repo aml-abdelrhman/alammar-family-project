@@ -113,27 +113,27 @@ export const ConnectedPrinces = () => {
       <div className="px-4 py-14 sm:px-6 md:px-10 lg:px-20 max-w-[1440px] mx-auto w-full">
         <div className="flex flex-col mb-8 md:flex-row md:items-center md:justify-between md:mb-10">
           <div className="flex flex-col items-start gap-2 text-right">
-            <div className="flex items-center gap-0 mb-3">
+            <div className="flex items-center gap-1 mb-3">
               <div className="w-8 md:w-10 h-[1px] bg-[#723F00]" />
-              <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 md:w-8 md:h-8">
+              {/* <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 md:w-8 md:h-8">
                 <Image
                   src="/images/icon.png"
                   alt="Icon"
                   fill
                   className="object-contain p-1"
                 />
-              </div>
-              <span className="text-[11px] md:text-xs font-bold text-[#723F00]">
+              </div> */}
+              <span className="text-[11px] md:text-xs font-normal text-[#723F00]">
                 مقام رفيع
               </span>
             </div>
             <h2 className="mb-3 text-3xl font-bold text-black sm:text-4xl md:text-6xl">
-              أمراء متّصلون بالأسرة
+              الأمراء  
             </h2>
             <div className="flex flex-col max-w-xl gap-1 text-sm font-normal text-black">
               <p>
                 نخصص هذا القسم لتوثيق سِيَر أفراد العائلة الذين تركوا أثرًا في
-                مجتمعهم لحقول أدناه معدّة.
+                مجتمعهم. الحقول أدناه معدّة.
               </p>
               <p>
                 كنمودج تصميمي، وستُستكمل بالأسماء والسير الرسمية المعتمدة من

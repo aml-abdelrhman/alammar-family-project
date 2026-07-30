@@ -26,9 +26,8 @@ export const ContactBanner = () => {
                 href="https://wa.me/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between bg-white text-[#211A1A] hover:bg-gray-100 transition-colors shadow-lg box-border"
+                className="flex items-center justify-between bg-white text-[#211A1A] hover:bg-gray-100 transition-colors shadow-lg box-border w-full sm:w-[214px]"
                 style={{
-                  width: "214px",
                   height: "56px",
                   paddingTop: "12px",
                   paddingRight: "24px",
@@ -58,13 +57,8 @@ export const ContactBanner = () => {
             </div>
 
             <div className="z-10 flex flex-col items-start w-full md:w-[35%] text-right">
-              <div className="flex items-center gap-0 mb-4">
-                <div className="w-8 h-[1px] bg-gray-500" />
-                <img
-                  src="/images/logo.png"
-                  alt="Logo"
-                  className="object-contain w-6 h-6"
-                />
+              <div className="flex items-center gap-1 mb-4">
+                <div className="w-8 h-[1px] bg-white" />
                 <span className="text-xs font-medium text-gray-300">
                   تواصل معنا
                 </span>

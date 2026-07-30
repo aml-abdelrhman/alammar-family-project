@@ -9,12 +9,15 @@ import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
-  { label: " خريطة تفاعلية", href: "#ushaiger" },
-  { label: "بلدة القرين", href: "#village" },
-  { label: "شخصيات مهمة", href: "#figures" },
   { label: "الأمراء", href: "#princes" },
+
   { label: "المشايخ وطلبة العلم", href: "#scholars" },
+
   { label: "الأعمال الخيرية", href: "#charity" },
+  { label: "بلدة القرين", href: "#village" },
+
+  { label: " اقليم الوشم ", href: "#ushaiger" },
+  { label: " المكتبة", href: "#figures" },
 ];
 
 export const Navbar = () => {
@@ -113,7 +116,7 @@ export const Navbar = () => {
               "bg-black text-white",
             )}
           >
-            <span className="ml-2 text-sm font-bold">المكتبة</span>
+            <span className="ml-2 text-sm font-bold">اتصل بنا </span>
             <span className="flex items-center justify-center w-10 h-10 bg-[#F0A23C] rounded-xl shrink-0">
               <ArrowUpLeft className="w-5 h-5 text-white" />
             </span>
@@ -167,7 +170,7 @@ export const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-between w-full h-[56px] pl-2 pr-6 bg-gray-100 rounded-xl"
             >
-              <span className="text-sm font-bold text-gray-700">المكتبة</span>
+              <span className="text-sm font-bold text-gray-700">اتصل بنا</span>
               <span className="flex items-center justify-center w-10 h-10 bg-[#F0A23C] rounded-xl shrink-0">
                 <ArrowUpLeft className="w-5 h-5 text-white" />
               </span>

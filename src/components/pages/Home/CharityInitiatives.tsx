@@ -197,23 +197,23 @@ export default function CharityInitiatives() {
         <div className="max-w-[1280px] mx-auto flex flex-col gap-[56px] py-[10px]">
           {/* رأس السكشن */}
           <div className="flex flex-col items-start justify-between gap-6 xl:flex-row xl:items-end">
-            <div className="flex flex-col items-start gap-4">
-              <div className="flex items-center gap-0">
+            <div className="flex flex-col items-start gap-5">
+              <div className="flex items-center gap-1">
                 <div className="w-8 h-[1px] bg-white" />
-                <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden">
+                {/* <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden">
                   <Image
                     src="/images/logo.png"
                     alt="Icon"
                     fill
                     className="object-contain p-1"
                   />
-                </div>
+                </div> */}
                 <span className="text-xs font-bold text-white">
                   العطاء المستمر
                 </span>
               </div>
               <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-6xl">
-                المبادرات الخيرية للأسرة
+                الأعمال الخيرية 
               </h2>
             </div>
 

@@ -15,31 +15,33 @@ export const UshaigerHeritage = () => {
   ];
 
   return (
+    // الحاوية الرئيسية للقسم
     <section
-      className="relative w-full pt-10 overflow-hidden border-b border-black sm:pt-12 md:pt-16"
+      className="box-border relative flex flex-col w-full mx-auto overflow-hidden"
       style={{
         background: `linear-gradient(0deg, #F7F2EA, #F7F2EA), linear-gradient(180deg, rgba(242, 231, 204, 0) 67.82%, rgba(245, 237, 219, 0.9) 94.11%, #F7F2EA 100%)`,
       }}
     >
-      <div className="flex flex-col items-start px-4 text-right sm:px-6 md:px-12 lg:px-20">
-        <div className="flex items-center gap-0 mb-3 sm:mb-4">
+      {/* 1. حاوية النصوص: تم نقل الـ padding والـ max-width إليها */}
+      <div className="w-full max-w-[1440px]  px-6 sm:px-20 lg:px-[120px] pt-[60px] pb-[15px] flex flex-col items-start text-right z-10">
+        <div className="flex items-center gap-1 mb-3 sm:mb-4">
           <div className="w-8 sm:w-10 h-[1px] bg-[#723F00]" />
-          <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 sm:w-8 sm:h-8">
+          {/* <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 sm:w-8 sm:h-8">
             <Image
               src="/images/icon.png"
               alt="Icon"
               fill
               className="object-contain p-1"
             />
-          </div>
+          </div> */}
           <span className="text-xs font-normal text-[#723F00]">القرية</span>
         </div>
 
         <h2 className="mb-5 text-2xl font-bold leading-tight text-black sm:mb-6 md:mb-8 sm:text-3xl md:text-5xl lg:text-6xl">
-          قرية القُرَائِن{" "}
+          بلدة القرائن
         </h2>
 
-        <div className="w-full max-w-full sm:max-w-xl md:max-w-2xl mb-4 space-y-3 sm:space-y-3.5">
+        <div className="w-full max-w-full sm:max-w-xl md:max-w-2xl mb-4 space-y-3 sm:space-y-3.5 ">
           {sentences.map((text, i) => (
             <div
               key={i}
@@ -53,10 +55,7 @@ export const UshaigerHeritage = () => {
                   viewBox="0 0 17 9"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
+                  style={{ width: "100%", height: "100%" }}
                 >
                   <path
                     d="M16.5669 6.99951V8.16581H15.4625V6.99951H16.5669Z"
@@ -136,15 +135,18 @@ export const UshaigerHeritage = () => {
                   />
                 </svg>
               </div>
-              <span className="text-[13px] sm:text-sm leading-relaxed" style={{ color: "#525252" }}>
+              <span
+                className="text-[13px] sm:text-sm leading-relaxed"
+                style={{ color: "#525252" }}
+              >
                 {text}
               </span>
             </div>
           ))}
         </div>
 
-        {/* Grid الإحصائيات: عمود واحد على الموبايل، صف واحد بداية من الـ sm */}
-<div className="grid grid-cols-3 w-full max-w-full sm:max-w-xl py-6 sm:py-8 gap-y-4 gap-x-2 sm:gap-[24px] justify-items-start">          {stats.map((stat, i) => (
+        <div className="grid grid-cols-3 w-full max-w-full sm:max-w-xl py-6 sm:py-8 gap-y-4 gap-x-2 sm:gap-[24px] justify-items-start">
+          {stats.map((stat, i) => (
             <div
               key={i}
               className="flex flex-col items-center justify-center text-center border-l last:border-0 border-[#723F00] pl-4 sm:pl-6 md:pl-10 w-full"
@@ -165,15 +167,16 @@ export const UshaigerHeritage = () => {
         </div>
       </div>
 
-      <div className="relative w-full h-[220px] sm:h-[320px] md:h-[460px] lg:h-[600px] overflow-hidden -mt-8 sm:-mt-12 md:-mt-24 lg:-mt-[8.5rem]">
+      <div className="absolute inset-x-0 bottom-0 h-[220px] sm:h-[320px] md:h-[460px] lg:h-[600px] overflow-hidden">
         <Image
           src="/images/AlQaraeenVillage.png"
           alt="إقليم الوشم"
           fill
           className="object-cover object-center scale-x-[-1]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F7F2EA] via-transparent to-transparent" />
       </div>
+      <div className="h-[160px] sm:h-[250px] md:h-[380px] lg:h-[500px]"></div>
     </section>
   );
 };

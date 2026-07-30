@@ -301,16 +301,16 @@ export const DigitalLibrary = () => {
       <div className="px-4 py-14 md:px-20 max-w-[1440px] mx-auto">
         <div className="flex flex-col mb-8 md:flex-row md:items-end md:justify-between md:mb-10 max-w-[1280px] mx-auto">
           <div className="flex flex-col items-start gap-4 text-right">
-            <div className="flex items-center gap-0 mb-3">
+            <div className="flex items-center gap-1 mb-3">
               <div className="w-8 md:w-10 h-[1px] bg-[#723F00]" />
-              <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 md:w-8 md:h-8">
+              {/* <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 md:w-8 md:h-8">
                 <Image
                   src="/images/icon.png"
                   alt="Icon"
                   fill
                   className="object-contain p-1"
                 />
-              </div>
+              </div> */}
               <span className="text-[11px] md:text-xs font-bold text-[#723F00]">
                 {" "}
                 أرشيف موثّق

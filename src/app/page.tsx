@@ -13,15 +13,15 @@ const HomePage = async () => {
   return (
     <main className="relative">
       <Hero />
-      
+            <div id="princes" className="scroll-mt-20"><ConnectedPrinces /></div>
+      <div id="scholars" className="scroll-mt-20"><ScholarsSection /></div>
+      <div id="charity" className="scroll-mt-20"><CharityInitiatives /></div>
+
       {/* استخدمنا scroll-mt-24 لضمان أن القسم لا يختفي خلف الـ Navbar الثابت عند الانتقال */}
       <div id="village" className="scroll-mt-20"><AlQaraeenVillage /></div>
             <div id="ushaiger" className="scroll-mt-20"><UshaigerHeritage /></div>
 
       {/* <div id="figures" className="scroll-mt-20"><QuranFigures /></div> */}
-      <div id="princes" className="scroll-mt-20"><ConnectedPrinces /></div>
-      <div id="scholars" className="scroll-mt-20"><ScholarsSection /></div>
-      <div id="charity" className="scroll-mt-20"><CharityInitiatives /></div>
       <div id="library" className="scroll-mt-20"><DigitalLibrary /></div>
 
       <ContactBanner />
