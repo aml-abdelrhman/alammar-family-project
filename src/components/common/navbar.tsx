@@ -65,8 +65,8 @@ export const Navbar = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-8 md:px-10 py-3",
-        isScrolled
-          ? "bg-[#1a1a1a]/80 backdrop-blur-md shadow-md py-.5"
+        isScrolled && !isOpen
+          ? "bg-[#1a1a1a]/80 backdrop-blur-md shadow-md py-0.5 md:py-3"
           : "bg-transparent",
       )}
     >
@@ -75,7 +75,9 @@ export const Navbar = () => {
           href="/"
           className={cn(
             "relative flex items-center justify-center overflow-hidden transition-all duration-500",
-            "w-30 h-30 md:w-[120px] md:h-[120px]",
+            isScrolled && !isOpen
+              ? "w-21 h-21 lg:w-[95px] lg:h-[95px] xl:w-[100px] xl:h-[100px]"
+              : "w-30 h-30 lg:w-[105px] lg:h-[105px] xl:w-[120px] xl:h-[120px]",
           )}
         >
           <Image
