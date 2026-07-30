@@ -62,16 +62,15 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav
+   <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-8 md:px-10 py-3",
+        "fixed top-0 left-0 w-full z-[100] transition-all duration-500 px-4 md:px-10 py-3",
         isScrolled && !isOpen
-          ? "bg-[#1a1a1a]/80 backdrop-blur-md shadow-md py-0.5 md:py-3"
+          ? "bg-[#1a1a1a]/80 backdrop-blur-md shadow-md py-2 md:py-3"
           : "bg-transparent",
       )}
     >
-      <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4 ">
-        <Link
+      <div className="flex items-center justify-between w-full gap-4"> <Link
           href="/"
           className={cn(
             "relative flex items-center justify-center overflow-hidden transition-all duration-500",

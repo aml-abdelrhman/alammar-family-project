@@ -61,29 +61,15 @@ export const AlQaraeenVillage = () => {
             </div>
 
             <div className="flex flex-col justify-between flex-1 w-full space-y-4">
-              {/* الكارت الأول */}
-              <div className="relative p-6 sm:p-8 overflow-hidden text-white rounded-xl bg-[#723F00] w-full flex-1 flex flex-col justify-center shadow-sm">
-                <div
-                  className="absolute top-0 left-0 w-1/2 pointer-events-none h-7 opacity-35"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1.2'%3E%3Crect x='10' y='10' width='16' height='16' transform='rotate(45 18 18)'/%3E%3Crect x='15' y='15' width='6' height='6' transform='rotate(45 18 18)'/%3E%3C/g%3E%3C/svg%3E")`,
-                    backgroundRepeat: "repeat-x",
-                    backgroundSize: "36px 36px",
-                    backgroundPosition: "top right",
-                  }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 w-1/2 pointer-events-none h-7 opacity-35"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1.2'%3E%3Crect x='10' y='10' width='16' height='16' transform='rotate(45 18 18)'/%3E%3Crect x='15' y='15' width='6' height='6' transform='rotate(45 18 18)'/%3E%3C/g%3E%3C/svg%3E")`,
-                    backgroundRepeat: "repeat-x",
-                    backgroundSize: "36px 36px",
-                    backgroundPosition: "bottom right",
-                  }}
-                />
-                <div className="mb-2 text-xs font-normal opacity-80">{cards[0].id} — نبذة تاريخية</div>
+                  <div 
+                className="relative flex flex-col justify-center flex-1 w-full p-6 overflow-hidden text-white bg-center bg-cover border shadow-sm sm:p-8 rounded-xl"
+                style={{
+                  backgroundImage: `url("/images/washm.svg")`,
+                }}
+              >
+                <div className="mb-2 text-xs font-normal opacity-90">{cards[0].id} — نبذة تاريخية</div>
                 <h3 className="mb-3 text-xl font-bold text-white sm:text-2xl">{cards[0].title}</h3>
-                <p className="text-sm font-normal leading-relaxed sm:text-base">{cards[0].desc}</p>
+                <p className="text-sm font-normal leading-relaxed sm:text-base opacity-95">{cards[0].desc}</p>
               </div>
 
               {/* الكارت الثاني */}
