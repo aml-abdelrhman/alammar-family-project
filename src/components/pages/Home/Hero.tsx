@@ -42,7 +42,7 @@ export const Hero = () => {
         </div>
 
         <div 
-          className="relative z-10 flex flex-col justify-end lg:justify-center items-start w-full max-w-[1280px] mx-auto my-auto pb-12 sm:pb-16 lg:pb-0 pt-24 sm:pt-28 lg:pt-0"
+          className="relative z-10 flex flex-col justify-end lg:justify-center items-start w-full max-w-[1280px] mx-auto my-auto pb-20 sm:pb-20 lg:pb-0 pt-24 sm:pt-28 lg:pt-0"
           style={{
             gap: "48px",
             minHeight: "739px",
