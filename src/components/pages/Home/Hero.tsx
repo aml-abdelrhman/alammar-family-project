@@ -38,19 +38,9 @@ export const Hero = () => {
           />
         </div>
         <div
-          className="relative z-10 flex flex-col justify-end lg:justify-center items-start w-full max-w-[1280px] mx-auto my-auto pb-20 sm:pb-20 lg:pb-0 pt-24 sm:pt-28 lg:pt-0"
-          style={{
-            gap: "48px",
-            minHeight: "739px",
-          }}
+          className="relative z-10 flex flex-col justify-end lg:justify-center items-start w-full max-w-[1280px] mx-auto my-auto pb-10 sm:pb-20 lg:pb-0 pt-12 sm:pt-28 lg:pt-0 gap-6 md:gap-12 lg:gap-[48px] min-h-[420px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[739px]"
         >
-          <div
-            className="flex flex-col justify-center items-start w-full max-w-[764px] mx-auto lg:mx-0 text-right"
-            style={{
-              gap: "8px",
-              minHeight: "402px",
-            }}
-          >
+          <div className="flex flex-col justify-center items-start w-full max-w-[764px] mx-auto lg:mx-0 text-right gap-2 min-h-[220px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[402px]">
             <div className="relative w-[160px] h-[80px] sm:w-[190px] sm:h-[95px] md:w-[229px] md:h-[116px]">
               <Image
                 src="/images/logo.svg"
