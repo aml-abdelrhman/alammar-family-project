@@ -19,10 +19,7 @@ export const Hero = () => {
   return (
     <>
       <section 
-        className="relative flex flex-col justify-between items-end w-full max-w-[1550px] mx-auto overflow-hidden rounded-t-[32px] px-6 sm:px-10 lg:px-[80px] pt-7 pb-[70px]"
-        style={{
-          minHeight: "905px",
-        }}
+        className="relative flex flex-col justify-between items-end w-full max-w-[1550px] mx-auto overflow-hidden rounded-t-[32px] px-6 sm:px-10 lg:px-[80px] pt-7 pb-[70px] min-h-[905px] md:min-h-screen lg:min-h-[905px]"
       >
         <div className="absolute inset-0 z-0">
           <Image
