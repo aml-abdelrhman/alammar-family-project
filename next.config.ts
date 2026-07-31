@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
     
     remotePatterns: [
       {
-        
         protocol: "https",
         hostname: "ik.imagekit.io",
         pathname: "/**",
@@ -29,10 +28,15 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "https",
+        hostname: "alammar-family-project-backend-production.up.railway.app",
+        pathname: "/storage/**",
+      },
+      {
         protocol: 'http',
         hostname: '127.0.0.1',
         port: '8000',
-        pathname: '/api/**',
+        pathname: '/storage/**',
       },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -40,7 +44,6 @@ const nextConfig: NextConfig = {
     formats: ["image/webp"],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
-    // تم إزالة contentSecurityPolicy مؤقتاً لأنها المسبب الرئيسي لخطأ الـ 500 في معالجة الصور الخارجية
   },
 
   experimental: {
