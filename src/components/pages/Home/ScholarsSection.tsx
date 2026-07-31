@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -10,48 +9,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-
-const scholars = [
-  {
-    name: "الاسم الكريم",
-    role: "طالب علم",
-    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
-    tags: ["علم الفقه", "علم الحديث"],
-  },
-  {
-    name: "الاسم الكريم",
-    role: "طالب علم",
-    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
-    tags: ["علم الفقه", "علم الحديث"],
-  },
-  {
-    name: "الاسم الكريم",
-    role: "طالب علم",
-    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
-    tags: ["علم الفقه", "علم الحديث"],
-  },
-  {
-    name: "الاسم الكريم",
-    role: "طالب علم",
-    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
-    tags: ["علم الفقه", "علم الحديث"],
-  },
-  {
-    name: "الاسم الكريم",
-    role: "طالب علم",
-    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
-    tags: ["علم الفقه", "علم الحديث"],
-  },
-  {
-    name: "الاسم الكريم",
-    role: "طالب علم",
-    desc: "نبذة عن المسيرة العلمية والمسار الدراسي — تُضاف لاحقاً نبذة عن المسيرة العلمية والمسار الدراسي.",
-    tags: ["علم الفقه", "علم الحديث"],
-  },
-];
-
-const REPEAT_COUNT = 4;
-const slides = Array.from({ length: REPEAT_COUNT }, () => scholars.slice(0, 6));
+import { useGetScholars } from "@/queries";
 
 export const ScholarsSection = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -59,9 +17,10 @@ export const ScholarsSection = () => {
     null,
   );
 
+  const { data: scholars = [], isLoading, isError } = useGetScholars();
   const autoplayRef = useRef(
     Autoplay({
-      delay: 4000,
+      delay: 3000,
       stopOnInteraction: false,
     }),
   );
@@ -76,19 +35,37 @@ export const ScholarsSection = () => {
     setPressedArrow("prev");
   };
 
+  // تقسيم الكروت لأعمدة، كل عمود فيه كارتين (صفين)
+  const columns: (typeof scholars)[] = [];
+  for (let i = 0; i < scholars.length; i += 2) {
+    columns.push(scholars.slice(i, i + 2));
+  }
+
+  // لو عدد الأعمدة قليل (زي 3 أعمدة بالظبط = نفس العرض الظاهر)
+  // embla هيلاقي مفيش حاجة زيادة يقلب عليها ومش هيتحرك خالص.
+  // فبنكرر الأعمدة نفسها لحد ما يبقى فيه محتوى كفاية للحركة والـ loop
+  const MIN_COLUMNS_FOR_LOOP = 7;
+  const displayColumns: { key: string; pair: typeof scholars }[] = [];
+  if (columns.length > 0) {
+    let dupIndex = 0;
+    while (displayColumns.length < MIN_COLUMNS_FOR_LOOP) {
+      columns.forEach((pair, colIdx) => {
+        displayColumns.push({ key: `${dupIndex}-${colIdx}`, pair });
+      });
+      dupIndex++;
+      // أمان: لو عدد الأعمدة الأصلي كبير أصلاً، مانكررش أكتر من مرتين
+      if (dupIndex >= 2 && displayColumns.length >= columns.length) break;
+    }
+  }
+
   return (
-    // Outer Section: Width 1440px max, Padding Top/Bottom 60px, Left/Right 80px (lg:px-[80px] lg:py-[60px])
     <section className="w-full bg-white py-10 lg:py-[60px] px-4 sm:px-8 lg:px-[80px]">
-      {/* Inner Content: Width 1280px max, Height ~593px (Min-height on desktop), Gap 56px between Header & Carousel */}
       <div className="max-w-[1280px] mx-auto flex flex-col gap-8 lg:gap-[56px]">
         {/* Header Section */}
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="flex flex-col items-start max-w-2xl text-right">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 md:w-10 h-[1px] bg-[#723F00]" />
-              {/* <div className="relative flex items-center justify-center w-6 h-6 overflow-hidden md:w-7 md:h-7">
-                <Image src="/images/icon.png" alt="Icon" fill className="object-contain" />
-              </div> */}
               <span className="text-xs md:text-sm font-normal text-[#723F00]">
                 اهل العلم
               </span>
@@ -133,18 +110,26 @@ export const ScholarsSection = () => {
         <Carousel
           setApi={setApi}
           plugins={[autoplayRef.current]}
-          opts={{ align: "start", direction: "rtl", loop: true, duration: 55 }}
+          opts={{
+            align: "start",
+            direction: "rtl",
+            loop: true,
+            duration: 25,
+          }}
           className="w-full"
         >
-          <CarouselContent>
-            {slides.map((group, slideIdx) => (
-              <CarouselItem key={slideIdx} className="basis-full">
-                {/* 3 Columns Grid with Gap 24px - 40px */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[24px]">
-                  {group.map((item, i) => (
+          <CarouselContent className="-ml-5">
+            {displayColumns.map(({ key, pair }) => (
+              <CarouselItem
+                key={key}
+                className="pl-5 basis-full sm:basis-1/2 lg:basis-1/3"
+              >
+                <div className="grid grid-rows-2 gap-5 lg:gap-[24px] h-full">
+                  {" "}
+                  {pair.map((item, i) => (
                     <div
                       key={i}
-                      className="flex flex-col justify-between bg-[#F8F5F0] rounded-2xl p-5 sm:p-6 h-auto w-full gap-4 border border-[#EFE9DF]"
+                      className="flex flex-col justify-between bg-[#F8F5F0] rounded-2xl p-5 sm:p-6 w-full gap-4 border border-[#EFE9DF]"
                     >
                       <div className="flex flex-col text-right">
                         <p className="flex flex-wrap items-center justify-start gap-1 mb-2 text-base font-bold text-black sm:text-lg">

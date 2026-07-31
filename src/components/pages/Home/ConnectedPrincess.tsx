@@ -17,44 +17,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-
-const princes = [
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  },
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  },
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  },
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  },
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  },
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  },
-  {
-    title: "القرن الخامس عشر",
-    description: "الأمير الأول من آل حُمَيْد",
-    content: "سيرة موجزة تُضاف لاحقًا من قبل العائلة، وفق البيانات الرسمية المعتمدة.",
-  }
-];
+import { useGetPrinces } from "@/queries";
 
 // زخرفة في الأعلى بخطين متوازيين وبسمك أخف
 const TopDecorativeBorder = () => (
@@ -104,6 +67,7 @@ export const ConnectedPrinces = () => {
     api?.scrollPrev();
     setPressedArrow("prev");
   };
+  const { data: princes = [], isLoading } = useGetPrinces();
 
   return (
     <section className="w-full bg-[#F7F2EA] flex flex-col justify-center">
@@ -169,21 +133,21 @@ export const ConnectedPrinces = () => {
           </div>
         </div>
 
-        <Carousel
-          setApi={setApi}
-          opts={{ align: "start", direction: "rtl", loop: true }}
-          plugins={[autoplayRef.current]}
-          className="w-full"
-        >
-          <CarouselContent className="flex gap-[16px] -mr-0">
-            {princes.map((item, i) => (
-              <CarouselItem
-                key={i}
-                className="pl-0 basis-[90%] sm:basis-[calc(50%-8px)] lg:basis-[416px] shrink-0"
-              >
-                <Card 
-                  className="w-full lg:w-[416px] h-[236px] rounded-[8px] pt-[48px] pr-[32px] pb-[48px] pl-[32px] gap-[10px] overflow-hidden border-0 flex flex-col justify-center items-end relative bg-[#1B0F00]"
-                >
+<Carousel
+  setApi={setApi}
+  opts={{ align: "start", direction: "rtl", loop: true }}
+  plugins={[autoplayRef.current]}
+  className="w-full"
+>
+<CarouselContent className="-mr-1">
+  {princes.map((item: any, i: number) => (
+    <CarouselItem
+      key={i}
+      className="pr-1 basis-[90%] sm:basis-1/2 lg:basis-1/3 shrink-0"
+    >
+      <Card 
+        className="w-full h-[236px] rounded-[8px] pt-[48px] pr-[32px] pb-[48px] pl-[32px] gap-[10px] overflow-hidden border-0 flex flex-col justify-center items-end relative bg-[#1B0F00]"
+      >
                   
                   {/* طبقة الصورة الخلفية مع الشفافية 15% وقلبها رأسياً */}
                   <div 

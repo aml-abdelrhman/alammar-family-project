@@ -24,8 +24,9 @@ const HomePage = async () => {
       {/* <div id="figures" className="scroll-mt-20"><QuranFigures /></div> */}
       <div id="library" className="scroll-mt-20"><DigitalLibrary /></div>
 
-      <ContactBanner />
-      {/* <QuranMemorySection /> */}
+<div id="ContactBanner" className="scroll-mt-20">
+  <ContactBanner />
+</div>      {/* <QuranMemorySection /> */}
     </main>
   );
 };

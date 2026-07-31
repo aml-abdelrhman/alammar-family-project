@@ -1,107 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ArrowUpLeft, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const initiatives = [
-  {
-    title: "الكفالة التعليمية للطلاب الجامعيين",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "115,000",
-    remaining: "15,000",
-    progress: 70,
-    image: "/images/charity/4.jpg",
-  },
-  {
-    title: "الأجهزة الكهربائية للمتعففين",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "115,000",
-    remaining: "15,000",
-    progress: 70,
-    image: "/images/charity/5.jpg",
-  },
-  {
-    title: "تأهيل أطفال اضطراب طيف التوحد",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "115,000",
-    remaining: "15,000",
-    progress: 70,
-    image: "/images/charity/6.jpg",
-  },
-  {
-    title: "رعاية وتأهيل الأسر المحتاجة",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "200,000",
-    remaining: "30,000",
-    progress: 85,
-    image: "/images/charity/4.jpg",
-  },
-  {
-    title: "سقيا الماء وتوصيل المنازل",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "90,000",
-    remaining: "10,000",
-    progress: 60,
-    image: "/images/charity/5.jpg",
-  },
-  {
-    title: "فرص العمل وتدريب الشباب",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "150,000",
-    remaining: "45,000",
-    progress: 50,
-    image: "/images/charity/6.jpg",
-  },
-  {
-    title: "مبادرة رعاية الأيتام",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "130,000",
-    remaining: "20,000",
-    progress: 75,
-    image: "/images/charity/4.jpg",
-  },
-  {
-    title: "دعم الغارمين المتعثرين",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "250,000",
-    remaining: "50,000",
-    progress: 80,
-    image: "/images/charity/5.jpg",
-  },
-  {
-    title: "كسوة الشتاء للعائلات",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "80,000",
-    remaining: "5,000",
-    progress: 90,
-    image: "/images/charity/6.jpg",
-  },  {
-    title: "مبادرة رعاية الأيتام",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "130,000",
-    remaining: "20,000",
-    progress: 75,
-    image: "/images/charity/4.jpg",
-  },
-  {
-    title: "دعم الغارمين المتعثرين",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "250,000",
-    remaining: "50,000",
-    progress: 80,
-    image: "/images/charity/5.jpg",
-  },
-  {
-    title: "كسوة الشتاء للعائلات",
-    desc: "وصف موجز للفئة المستفيدة منها ضمن مبادرات العائلة الخيرية.",
-    target: "80,000",
-    remaining: "5,000",
-    progress: 90,
-    image: "/images/charity/6.jpg",
-  }
-];
+import { useGetCharities } from "@/queries";
 
 const RiyalIcon = () => (
   <svg
@@ -146,36 +49,47 @@ const RiyalIconRemaining = () => (
 );
 
 export default function CharityInitiatives() {
+  const { data: charities, isLoading, error } = useGetCharities();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pressedArrow, setPressedArrow] = useState("");
 
+  const initiatives = charities ?? [];
   const itemsPerPage = 6;
   const totalPages = Math.ceil(initiatives.length / itemsPerPage);
 
   const handleNext = () => {
     setPressedArrow("next");
-    setCurrentIndex((prev) => (prev + itemsPerPage >= initiatives.length ? 0 : prev + itemsPerPage));
+    setCurrentIndex((prev) =>
+      prev + itemsPerPage >= initiatives.length ? 0 : prev + itemsPerPage,
+    );
     setTimeout(() => setPressedArrow(""), 400);
   };
 
   const handlePrev = () => {
     setPressedArrow("prev");
-    setCurrentIndex((prev) => (prev - itemsPerPage < 0 ? Math.max(0, initiatives.length - itemsPerPage) : prev - itemsPerPage));
+    setCurrentIndex((prev) =>
+      prev - itemsPerPage < 0
+        ? Math.max(0, initiatives.length - itemsPerPage)
+        : prev - itemsPerPage,
+    );
     setTimeout(() => setPressedArrow(""), 400);
   };
 
-  // تقليب الكاردز وتغييرها تلقائياً كل 4 ثوانٍ
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setPressedArrow("next");
-      setCurrentIndex((prev) => (prev + itemsPerPage >= initiatives.length ? 0 : prev + itemsPerPage));
-      setTimeout(() => setPressedArrow(""), 400);
+      setCurrentIndex((prev) =>
+        prev + itemsPerPage >= initiatives.length ? 0 : prev + itemsPerPage,
+      );
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  const currentInitiatives = initiatives.slice(currentIndex, currentIndex + itemsPerPage);
+  }, [initiatives.length]);
+  
+  const currentInitiatives = initiatives.slice(
+    currentIndex,
+    currentIndex + itemsPerPage,
+  );
 
   return (
     <section
@@ -213,7 +127,7 @@ export default function CharityInitiatives() {
                 </span>
               </div>
               <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-6xl">
-                الأعمال الخيرية 
+                الأعمال الخيرية
               </h2>
             </div>
 
@@ -246,7 +160,9 @@ export default function CharityInitiatives() {
                   </div>
                   <div className="flex flex-col flex-grow px-2 text-right">
                     <h3 className="mb-2 text-lg font-medium">{item.title}</h3>
-                    <p className="mb-6 text-sm text-gray-500">{item.desc}</p>
+                    <p className="mb-6 text-sm text-gray-500">
+                      {item.description}
+                    </p>
                     <div className="w-full mb-4 border-b border-gray-200" />
 
                     <div className="flex justify-between mb-2 text-xs text-gray-500">
@@ -291,7 +207,7 @@ export default function CharityInitiatives() {
                   "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
                   pressedArrow === "prev"
                     ? "bg-[#f0a23c] scale-90"
-                    : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                    : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]",
                 )}
               >
                 <ArrowRight className="w-6 h-6 text-white" />
@@ -302,7 +218,7 @@ export default function CharityInitiatives() {
                   "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
                   pressedArrow === "next"
                     ? "bg-[#f0a23c] scale-90"
-                    : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                    : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]",
                 )}
               >
                 <ArrowLeft className="w-6 h-6 text-white" />
@@ -321,7 +237,7 @@ export default function CharityInitiatives() {
                     "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
                     pressedArrow === "prev"
                       ? "bg-[#f0a23c] scale-90"
-                      : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                      : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]",
                   )}
                 >
                   <ArrowRight className="w-6 h-6 text-white" />
@@ -332,7 +248,7 @@ export default function CharityInitiatives() {
                     "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 active:scale-90",
                     pressedArrow === "next"
                       ? "bg-[#f0a23c] scale-90"
-                      : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]"
+                      : "bg-[#FFFFFF20] hover:bg-[#FFFFFF40]",
                   )}
                 >
                   <ArrowLeft className="w-6 h-6 text-white" />

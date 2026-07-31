@@ -9,17 +9,13 @@ import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
-  { label: "الأمراء", href: "#princes" },
-
-  { label: "المشايخ وطلبة العلم", href: "#scholars" },
-
-  { label: "الأعمال الخيرية", href: "#charity" },
-  { label: "بلدة القرين", href: "#village" },
-
-  { label: " اقليم الوشم ", href: "#ushaiger" },
-  { label: " المكتبة", href: "#figures" },
+  { label: "الأمراء", href: "/#princes" },
+  { label: "المشايخ وطلبة العلم", href: "/#scholars" },
+  { label: "الأعمال الخيرية", href: "/#charity" },
+  { label: "بلدة القرين", href: "/#ushaiger" },
+  { label: " اقليم الوشم ", href: "/#village" },
+  { label: " المكتبة", href: "/#library" },
 ];
-
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +58,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-   <nav
+    <nav
       className={cn(
         "fixed top-0 left-0 w-full z-[100] transition-all duration-500 px-4 md:px-10 py-3",
         isScrolled && !isOpen
@@ -70,7 +66,9 @@ export const Navbar = () => {
           : "bg-transparent",
       )}
     >
-      <div className="flex items-center justify-between w-full gap-4"> <Link
+      <div className="flex items-center justify-between w-full gap-4">
+        {" "}
+        <Link
           href="/"
           className={cn(
             "relative flex items-center justify-center overflow-hidden transition-all duration-500",
@@ -86,7 +84,6 @@ export const Navbar = () => {
             className="object-contain "
           />
         </Link>
-
         <div className="items-center justify-center hidden gap-2 p-2 xl:flex bg-[#FFFFFF59] rounded-lg">
           {navigationItems.map((item, idx) => {
             const isActive = activeHref === item.href;
@@ -106,10 +103,9 @@ export const Navbar = () => {
             );
           })}
         </div>
-
         <div className="items-center hidden shrink-0 xl:flex">
           <Link
-            href="#library"
+            href="#ContactBanner"
             className={cn(
               "flex items-center justify-between pl-2 pr-8 transition-all shrink-0 rounded-xl",
               "w-[154px]",
@@ -123,7 +119,6 @@ export const Navbar = () => {
             </span>
           </Link>
         </div>
-
         <div className="cursor-pointer xl:hidden">
           <Button
             variant="ghost"
@@ -138,7 +133,6 @@ export const Navbar = () => {
             )}
           </Button>
         </div>
-
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetContent
             side="right"
@@ -167,7 +161,7 @@ export const Navbar = () => {
               })}
             </div>
             <Link
-              href="#library"
+              href="#ContactBanner"
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-between w-full h-[56px] pl-2 pr-6 bg-gray-100 rounded-xl"
             >

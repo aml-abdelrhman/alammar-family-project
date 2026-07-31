@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     
     remotePatterns: [
       {
+        
         protocol: "https",
         hostname: "ik.imagekit.io",
         pathname: "/**",
@@ -26,6 +27,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
         pathname: "/**",
+      },
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+        port: '8000',
+        pathname: '/api/**',
       },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

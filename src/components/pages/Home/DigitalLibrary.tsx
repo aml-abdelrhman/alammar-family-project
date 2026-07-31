@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft, X, Download } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -10,20 +10,11 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
+import { useGetDigitalLibrary } from "@/queries";
+import { DigitalLibraryItem } from "@/queries";
 
-const books = [
-  { title: "أنساب آل عبدالعزيز", tag: "PDF", date: "١٤٤٠هـ", size: "12MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "ZIP", date: "١٤٤١هـ", size: "24MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "DOCX", date: "١٤٤٢هـ", size: "5MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "PDF", date: "١٤٤٣هـ", size: "18MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "PDF", date: "١٤٤٠هـ", size: "15MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "ZIP", date: "١٤٤١هـ", size: "30MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "DOCX", date: "١٤٤٢هـ", size: "8MB" },
-  { title: "أنساب آل عبدالعزيز", tag: "PDF", date: "١٤٤٣هـ", size: "22MB" },
-];
+// ---------------- Dynamic Book/File Icons based on file_path ----------------
 
-// ---------------- Book Icons ----------------
 function BookIconRed({ uid }: { uid: string }) {
   const clip = `clip_${uid}_red`;
   return (
@@ -54,113 +45,6 @@ function BookIconRed({ uid }: { uid: string }) {
             height="29"
             fill="white"
             transform="translate(14.5 14.5)"
-          />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-}
-
-function BookIconBlue({ uid }: { uid: string }) {
-  return (
-    <svg
-      width="58"
-      height="58"
-      viewBox="0 0 58 58"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="58" height="58" rx="8" fill="#F2F7FE" />
-      <path
-        d="M19.6668 16.0833H33.0002L39.6668 22.5416V40.625C39.6668 41.3384 39.0699 41.9166 38.3335 41.9166H19.6668C18.9304 41.9166 18.3335 41.3384 18.3335 40.625V17.375C18.3335 16.6616 18.9304 16.0833 19.6668 16.0833Z"
-        fill="#2F88FF"
-        stroke="#BAD7FF"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M25 25.1304H33"
-        stroke="white"
-        strokeWidth="2.43132"
-        strokeLinecap="round"
-      />
-      <path
-        d="M29.0054 25.1304V35.4583"
-        stroke="white"
-        strokeWidth="2.43132"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function BookIconGreen({ uid }: { uid: string }) {
-  const clip = `clip_${uid}_green`;
-  return (
-    <svg
-      width="58"
-      height="58"
-      viewBox="0 0 58 58"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="58" height="58" rx="8" fill="#F3FEF2" />
-      <g clipPath={`url(#${clip})`}>
-        <path
-          d="M20.6001 29.9333H21.5334C21.781 29.9333 22.0184 29.835 22.1934 29.6599C22.3684 29.4849 22.4668 29.2475 22.4668 29C22.4668 28.7524 22.3684 28.5151 22.1934 28.34C22.0184 28.165 21.781 28.0667 21.5334 28.0667H20.6001V29.9333Z"
-          fill="#0CB600"
-        />
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M16.8667 17.8C16.8667 17.0574 17.1617 16.3452 17.6868 15.8201C18.2119 15.295 18.9241 15 19.6667 15H34.9864L41.1334 21.1469V40.2C41.1334 40.9426 40.8384 41.6548 40.3133 42.1799C39.7882 42.705 39.076 43 38.3334 43H19.6667C18.9241 43 18.2119 42.705 17.6868 42.1799C17.1617 41.6548 16.8667 40.9426 16.8667 40.2V17.8ZM18.7334 26.2H21.5334C22.276 26.2 22.9882 26.495 23.5133 27.0201C24.0384 27.5452 24.3334 28.2574 24.3334 29C24.3334 29.7426 24.0384 30.4548 23.5133 30.9799C22.9882 31.505 22.276 31.8 21.5334 31.8H20.6V35.5333H18.7334V26.2ZM33.6667 26.2H39.2667V28.0667H35.5334V33.6667H37.4V30.8667H39.2667V35.5333H33.6667V26.2ZM28.0667 31.0869V35.5333H26.2V26.2H28.0667V26.9131L29.9334 30.6464V26.2H31.8V35.5333H29.9334V34.8203L28.0667 31.0869Z"
-          fill="#0CB600"
-        />
-      </g>
-      <defs>
-        <clipPath id={clip}>
-          <rect
-            width="28"
-            height="28"
-            fill="white"
-            transform="translate(15 15)"
-          />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-}
-
-function BookIconGold({ uid }: { uid: string }) {
-  const clip = `clip_${uid}_gold`;
-  return (
-    <svg
-      width="58"
-      height="58"
-      viewBox="0 0 58 58"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="58" height="58" rx="8" fill="#FEFAF2" />
-      <g clipPath={`url(#${clip})`}>
-        <path
-          d="M35.6861 21.7061H40.4271C40.4874 21.7053 40.546 21.6866 40.5955 21.6523C40.6451 21.6181 40.6834 21.57 40.7055 21.514C40.7277 21.4579 40.7327 21.3966 40.7199 21.3378C40.7071 21.2789 40.6772 21.2252 40.6338 21.1834L34.3853 14.9349C34.3435 14.8915 34.2898 14.8615 34.2309 14.8488C34.1721 14.836 34.1107 14.841 34.0547 14.8631C33.9987 14.8853 33.9506 14.9236 33.9163 14.9731C33.8821 15.0227 33.8634 15.0813 33.8626 15.1416V19.8826C33.8626 20.3662 34.0547 20.83 34.3967 21.172C34.7386 21.514 35.2025 21.7061 35.6861 21.7061ZM29 30.3616H28.2462C28.1624 30.3616 28.082 30.3949 28.0228 30.4542C27.9635 30.5134 27.9302 30.5938 27.9302 30.6777V32.1851C27.9302 32.2689 27.9635 32.3493 28.0228 32.4086C28.082 32.4678 28.1624 32.5011 28.2462 32.5011H29C29.2837 32.5011 29.5558 32.3884 29.7564 32.1878C29.957 31.9872 30.0697 31.7151 30.0697 31.4314C30.0697 31.1476 29.957 30.8755 29.7564 30.6749C29.5558 30.4743 29.2837 30.3616 29 30.3616Z"
-          fill="#EF9000"
-          fillOpacity="0.937255"
-        />
-        <path
-          d="M40.8525 22.9217H35.686C34.8799 22.9217 34.1069 22.6015 33.537 22.0316C32.967 21.4616 32.6468 20.6886 32.6468 19.8826V14.716C32.6468 14.6354 32.6148 14.5581 32.5578 14.5011C32.5008 14.4441 32.4235 14.4121 32.3429 14.4121H19.2746C18.6298 14.4121 18.0113 14.6683 17.5554 15.1242C17.0994 15.5802 16.8433 16.1986 16.8433 16.8434V41.1566C16.8433 41.8014 17.0994 42.4198 17.5554 42.8758C18.0113 43.3317 18.6298 43.5879 19.2746 43.5879H38.7251C39.3699 43.5879 39.9883 43.3317 40.4443 42.8758C40.9003 42.4198 41.1564 41.8014 41.1564 41.1566V23.2256C41.1564 23.145 41.1244 23.0677 41.0674 23.0107C41.0104 22.9537 40.9331 22.9217 40.8525 22.9217ZM25.4987 35.0783C25.4987 35.4167 25.4321 35.7519 25.3026 36.0645C25.173 36.3772 24.9832 36.6613 24.7439 36.9006C24.5046 37.14 24.2205 37.3298 23.9078 37.4593C23.5951 37.5888 23.26 37.6555 22.9215 37.6555C22.5831 37.6555 22.248 37.5888 21.9353 37.4593C21.6226 37.3298 21.3385 37.14 21.0992 36.9006C20.8599 36.6613 20.67 36.3772 20.5405 36.0645C20.411 35.7519 20.3444 35.4167 20.3444 35.0783C20.3444 34.8784 20.4238 34.6867 20.5651 34.5453C20.7065 34.404 20.8982 34.3246 21.0981 34.3246C21.298 34.3246 21.4897 34.404 21.631 34.5453C21.7724 34.6867 21.8518 34.8784 21.8518 35.0783C21.8518 35.362 21.9645 35.6341 22.1651 35.8347C22.3657 36.0354 22.6378 36.1481 22.9215 36.1481C23.2053 36.1481 23.4774 36.0354 23.678 35.8347C23.8786 35.6341 23.9913 35.362 23.9913 35.0783V29.6078C23.9913 29.4079 24.0707 29.2162 24.2121 29.0749C24.3534 28.9335 24.5451 28.8541 24.745 28.8541C24.9449 28.8541 25.1366 28.9335 25.278 29.0749C25.4193 29.2162 25.4987 29.4079 25.4987 29.6078V35.0783ZM28.8418 34.0085H28.2461C28.2046 34.0085 28.1635 34.0167 28.1252 34.0326C28.0868 34.0485 28.052 34.0717 28.0226 34.1011C27.9933 34.1304 27.97 34.1653 27.9541 34.2036C27.9382 34.242 27.9301 34.2831 27.9301 34.3246V36.9018C27.9301 37.1017 27.8506 37.2934 27.7093 37.4347C27.568 37.5761 27.3762 37.6555 27.1764 37.6555C26.9765 37.6555 26.7847 37.5761 26.6434 37.4347C26.5021 37.2934 26.4226 37.1017 26.4226 36.9018V29.6078C26.421 29.5084 26.4394 29.4097 26.4767 29.3175C26.514 29.2253 26.5694 29.1415 26.6397 29.0712C26.7101 29.0009 26.7938 28.9454 26.886 28.9081C26.9782 28.8709 27.0769 28.8525 27.1764 28.8541H28.9998C29.361 28.8539 29.7182 28.9295 30.0482 29.0762C30.3782 29.2229 30.6737 29.4372 30.9156 29.7055C31.1574 29.9737 31.3402 30.2897 31.4521 30.6331C31.5639 30.9765 31.6024 31.3396 31.5649 31.6988C31.4753 32.3516 31.1478 32.9484 30.6453 33.3746C30.1427 33.8009 29.5005 34.0266 28.8418 34.0085ZM37.6553 32.0391C37.6553 32.1381 37.6358 32.2361 37.5979 32.3276C37.5601 32.419 37.5045 32.5021 37.4346 32.5721C37.3646 32.6421 37.2815 32.6976 37.19 32.7355C37.0986 32.7734 37.0006 32.7929 36.9016 32.7929C36.8026 32.7929 36.7046 32.7734 36.6132 32.7355C36.5217 32.6976 36.4386 32.6421 36.3687 32.5721C36.2987 32.5021 36.2432 32.419 36.2053 32.3276C36.1674 32.2361 36.1479 32.1381 36.1479 32.0391V31.4313C36.1479 31.1476 36.0352 30.8755 35.8346 30.6749C35.6339 30.4742 35.3618 30.3615 35.0781 30.3615C34.7944 30.3615 34.5223 30.4742 34.3217 30.6749C34.1211 30.8755 34.0083 31.1476 34.0083 31.4313V35.0783C34.01 35.3148 34.0899 35.5442 34.2357 35.7304C34.3815 35.9167 34.585 36.0494 34.8142 36.1077C35.0434 36.1661 35.2856 36.1468 35.5027 36.0529C35.7198 35.959 35.8997 35.7958 36.0142 35.5889C36.075 35.4795 36.1601 35.2242 35.9048 35.2242H35.686C35.4861 35.2242 35.2943 35.1448 35.153 35.0034C35.0117 34.8621 34.9322 34.6704 34.9322 34.4705C34.9322 34.2706 35.0117 34.0789 35.153 33.9375C35.2943 33.7962 35.4861 33.7168 35.686 33.7168H36.9016C37.1015 33.7168 37.2932 33.7962 37.4346 33.9375C37.5759 34.0789 37.6553 34.2706 37.6553 34.4705V35.0783C37.6553 35.7618 37.3838 36.4173 36.9005 36.9006C36.4172 37.384 35.7616 37.6555 35.0781 37.6555C34.3946 37.6555 33.7391 37.384 33.2558 36.9006C32.7725 36.4173 32.5009 35.7618 32.5009 35.0783V31.4313C32.5009 30.7478 32.7725 30.0923 33.2558 29.609C33.7391 29.1256 34.3946 28.8541 35.0781 28.8541C35.7616 28.8541 36.4172 29.1256 36.9005 29.609C37.3838 30.0923 37.6553 30.7478 37.6553 31.4313V32.0391Z"
-          fill="#EF9000"
-          fillOpacity="0.937255"
-        />
-      </g>
-      <defs>
-        <clipPath id={clip}>
-          <rect
-            width="29.1758"
-            height="29.1758"
-            fill="white"
-            transform="translate(14.4121 14.4121)"
           />
         </clipPath>
       </defs>
@@ -220,7 +104,7 @@ function BookIconWord({ uid }: { uid: string }) {
         fill={`url(#${grad})`}
       />
       <path
-        d="M19.8999 30.9258C19.9233 31.1041 19.9386 31.2594 19.9459 31.3918H19.9739C19.9839 31.2659 20.0056 31.1141 20.0389 30.9365C20.0889 30.6701 20.1009 30.6091 20.1279 30.486L21.3829 25.248H23.0069L24.3069 30.4076C24.382 30.7268 24.4361 31.0504 24.4689 31.3763H24.4909C24.5159 31.0591 24.561 30.7436 24.6259 30.4318L25.6649 25.2412H27.1419L25.3179 32.7471H23.5909L22.3539 27.7813C22.3179 27.6379 22.2773 27.4513 22.2319 27.2213C22.1866 26.9914 22.1586 26.8235 22.1479 26.7176H22.1269C22.1129 26.8396 22.0849 27.0208 22.0429 27.2611C22.0009 27.5013 21.9676 27.6796 21.9429 27.7958L20.7799 32.75H19.0239L17.1899 25.248H18.6899L19.8209 30.4967C19.8539 30.6385 19.8803 30.7817 19.8999 30.9258Z"
+        d="M19.8999 30.9258C19.9233 31.1041 19.9386 31.2594 19.9459 31.3918H19.9739C19.9839 31.2659 20.0056 31.1141 20.0389 30.9365C20.0889 30.6701 20.1009 30.6091 20.1279 30.486L21.3829 25.248H23.0069L24.3069 30.4076C24.382 30.7268 24.4361 31.0504 24.4689 31.3763H24.4909C24.5159 31.0591 24.561 30.7436 24.6259 30.4318L25.6649 25.2412H27.1419L25.3179 32.7471H23.5909L22.3539 27.7813C22.3179 27.6379 22.2773 27.4513 22.2319 27.2213C22.1866 26.9914 22.1586 26.8235 22.1479 26.7176H22.1269C22.1129 26.8396 22.0849 27.0208 22.0429 27.2611C22.0009 27.5013 21.9676 27.6796 21.9429 27.7958L20.7799 32.75H19.0239L17.1899 25.248H18.6899L19.8209 30.4967C19.8539 30.6385 19.8803 27.7813 19.8999 30.9258Z"
         fill="white"
       />
       <defs>
@@ -241,17 +125,61 @@ function BookIconWord({ uid }: { uid: string }) {
   );
 }
 
-const bookIcons = [
-  BookIconRed,
-  BookIconBlue,
-  BookIconGreen,
-  BookIconGold,
-  BookIconWord,
-];
+function BookIconGold({ uid }: { uid: string }) {
+  const clip = `clip_${uid}_gold`;
+  return (
+    <svg
+      width="58"
+      height="58"
+      viewBox="0 0 58 58"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="58" height="58" rx="8" fill="#FEFAF2" />
+      <g clipPath={`url(#${clip})`}>
+        <path
+          d="M35.6861 21.7061H40.4271C40.4874 21.7053 40.546 21.6866 40.5955 21.6523C40.6451 21.6181 40.6834 21.57 40.7055 21.514C40.7277 21.4579 40.7327 21.3966 40.7199 21.3378C40.7071 21.2789 40.6772 21.2252 40.6338 21.1834L34.3853 14.9349C34.3435 14.8915 34.2898 14.8615 34.2309 14.8488C34.1721 14.836 34.1107 14.841 34.0547 14.8631C33.9987 14.8853 33.9506 14.9236 33.9163 14.9731C33.8821 15.0227 33.8634 15.0813 33.8626 15.1416V19.8826C33.8626 20.3662 34.0547 20.83 34.3967 21.172C34.7386 21.514 35.2025 21.7061 35.6861 21.7061ZM29 30.3616H28.2462C28.1624 30.3616 28.082 30.3949 28.0228 30.4542C27.9635 30.5134 27.9302 30.5938 27.9302 30.6777V32.1851C27.9302 32.2689 27.9635 32.3493 28.0228 32.4086C28.082 32.4678 28.1624 32.5011 28.2462 32.5011H29C29.2837 32.5011 29.5558 32.3884 29.7564 32.1878C29.957 31.9872 30.0697 31.7151 30.0697 31.4314C30.0697 31.1476 29.957 30.8755 29.7564 30.6749C29.5558 30.4743 29.2837 30.3616 29 30.3616Z"
+          fill="#EF9000"
+          fillOpacity="0.937255"
+        />
+        <path
+          d="M40.8525 22.9217H35.6860C34.8799 22.9217 34.1069 22.6015 33.537 22.0316C32.967 21.4616 32.6468 20.6886 32.6468 19.8826V14.716C32.6468 14.6354 32.6148 14.5581 32.5578 14.5011C32.5008 14.4441 32.4235 14.4121 32.3429 14.4121H19.2746C18.6298 14.4121 18.0113 14.6683 17.5554 15.1242C17.0994 15.5802 16.8433 16.1986 16.8433 16.8434V41.1566C16.8433 41.8014 17.0994 42.4198 17.5554 42.8758C18.0113 43.3317 18.6298 43.5879 19.2746 43.5879H38.7251C39.3699 43.5879 39.9883 43.3317 40.4443 42.8758C40.9003 42.4198 41.1564 41.8014 41.1564 41.1566V23.2256C41.1564 23.145 41.1244 23.0677 41.0674 23.0107C41.0104 22.9537 40.9331 22.9217 40.8525 22.9217ZM25.4987 35.0783C25.4987 35.4167 25.4321 35.7519 25.3026 36.0645C25.173 36.3772 24.9832 36.6613 24.7439 36.9006C24.5046 37.14 24.2205 37.3298 23.9078 37.4593C23.5951 37.5888 23.26 37.6555 22.9215 37.6555C22.5831 37.6555 22.248 37.5888 21.9353 37.4593C21.6226 37.3298 21.3385 37.14 21.0992 36.9006C20.8599 36.6613 20.67 36.3772 20.5405 36.0645C20.411 35.7519 20.3444 35.4167 20.3444 35.0783C20.3444 34.8784 20.4238 34.6867 20.5651 34.5453C20.7065 34.404 20.8982 34.3246 21.0981 34.3246C21.298 34.3246 21.4897 34.404 21.631 34.5453C21.7724 34.6867 21.8518 34.8784 21.8518 35.0783C21.8518 35.362 21.9645 35.6341 22.1651 35.8347C22.3657 36.0354 22.6378 36.1481 22.9215 36.1481C23.2053 36.1481 23.4774 36.0354 23.678 35.8347C23.8786 35.6341 23.9913 35.362 23.9913 35.0783V29.6078C23.9913 29.4079 24.0707 29.2162 24.2121 29.0749C24.3534 28.9335 24.5451 28.8541 24.745 28.8541C24.9449 28.8541 25.1366 28.9335 25.278 29.0749C25.4193 29.2162 25.4987 29.4079 25.4987 29.6078V35.0783ZM28.8418 34.0085H28.2461C28.2046 34.0085 28.1635 34.0167 28.1252 34.0326C28.0868 34.0485 28.052 34.0717 28.0226 34.1011C27.9933 34.1304 27.97 34.1653 27.9541 34.2036C27.9382 34.242 27.9301 34.2831 27.9301 34.3246V36.9018C27.9301 37.1017 27.8506 37.2934 27.7093 37.4347C27.568 37.5761 27.3762 37.6555 27.1764 37.6555C26.9765 37.6555 26.7847 37.5761 26.6434 37.4347C26.5021 37.2934 26.4226 37.1017 26.4226 36.9018V29.6078C26.421 29.5084 26.4394 29.4097 26.4767 29.3175C26.514 29.2253 26.5694 29.1415 26.6397 29.0712C26.7101 29.0009 26.7938 28.9454 26.886 28.9081C26.9782 28.8709 27.0769 28.8525 27.1764 28.8541H28.9998C29.361 28.8539 29.7182 28.9295 30.0482 29.0762C30.3782 29.2229 30.6737 29.4372 30.9156 29.7055C31.1574 29.9737 31.3402 30.2897 31.4521 30.6331C31.5639 30.9765 31.6024 31.3396 31.5649 31.6988C31.4753 32.3516 31.1478 32.9484 30.6453 33.3746C30.1427 33.8009 29.5005 34.0266 28.8418 34.0085ZM37.6553 32.0391C37.6553 32.1381 37.6358 32.2361 37.5979 32.3276C37.5601 32.419 37.5045 32.5021 37.4346 32.5721C37.3646 32.6421 37.2815 32.6976 37.19 32.7355C37.0986 32.7734 37.0006 32.7929 36.9016 32.7929C36.8026 32.7929 36.7046 32.7734 36.6132 32.7355C36.5217 32.6976 36.4386 32.6421 36.3687 32.5721C36.2987 32.5021 36.2432 32.419 36.2053 32.3276C36.1674 32.2361 36.1479 32.1381 36.1479 32.0391V31.4313C36.1479 31.1476 36.0352 30.8755 35.8346 30.6749C35.6339 30.4742 35.3618 30.3615 35.0781 30.3615C34.7944 30.3615 34.5223 30.4742 34.3217 30.6749C34.1211 30.8755 34.0083 31.1476 34.0083 31.4313V35.0783C34.01 35.3148 34.0899 35.5442 34.2357 35.7304C34.3815 35.9167 34.585 36.0494 34.8142 36.1077C35.0434 36.1661 35.2856 36.1468 35.5027 36.0529C35.7198 35.959 35.8997 35.7958 36.0142 35.5889C36.075 35.4795 36.1601 35.2242 35.9048 35.2242H35.6860C35.4861 35.2242 35.2943 35.1448 35.153 35.0034C35.0117 34.8621 34.9322 34.6704 34.9322 34.4705C34.9322 34.2706 35.0117 34.0789 35.153 33.9375C35.2943 33.7962 35.4861 33.7168 35.6860 33.7168H36.9016C37.1015 33.7168 37.2932 33.7962 37.4346 33.9375C37.5759 34.0789 37.6553 34.2706 37.6553 34.4705V35.0783C37.6553 35.7618 37.3838 36.4173 36.9005 36.9006C36.4172 37.384 35.7616 37.6555 35.0781 37.6555C34.3946 37.6555 33.7391 37.384 33.2558 36.9006C32.7725 36.4173 32.5009 35.7618 32.5009 35.0783V31.4313C32.5009 30.7478 32.7725 30.0923 33.2558 29.609C33.7391 29.1256 34.3946 28.8541 35.0781 28.8541C35.7616 28.8541 36.4172 29.1256 36.9005 29.609C37.3838 30.0923 37.6553 30.7478 37.6553 31.4313V32.0391Z"
+          fill="#EF9000"
+          fillOpacity="0.937255"
+        />
+      </g>
+      <defs>
+        <clipPath id={clip}>
+          <rect
+            width="29.1758"
+            height="29.1758"
+            fill="white"
+            transform="translate(14.4121 14.4121)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
 
-function BookIcon({ index, uid }: { index: number; uid: string }) {
-  const Icon = bookIcons[index % bookIcons.length];
-  return <Icon uid={uid} />;
+// دالة ذكية لاختيار الأيقونة بناءً على امتداد الملف في الرابط
+function getFileIcon(filePath: string = "", uid: string) {
+  const path = filePath.toLowerCase();
+
+  if (path.endsWith(".pdf") || path.includes(".pdf?")) {
+    return <BookIconRed uid={uid} />;
+  }
+  if (
+    path.endsWith(".doc") ||
+    path.endsWith(".docx") ||
+    path.includes(".doc")
+  ) {
+    return <BookIconWord uid={uid} />;
+  }
+  if (path.match(/\.(png|jpg|jpeg|webp)$/) || path.includes("image")) {
+    return <BookIconGold uid={uid} />;
+  }
+  return <BookIconGold uid={uid} />;
 }
 
 // ---------------- Decorative Border ----------------
@@ -278,21 +206,119 @@ const DecorativeBorder = () => (
   </div>
 );
 
-// ---------------- Digital Library ----------------
+// ---------------- Digital Library Component ----------------
 export const DigitalLibrary = () => {
   const [api, setApi] = useState<CarouselApi>();
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
 
-  const bookGroups: (typeof books)[number][][] = [];
-  for (let i = 0; i < books.length; i += 2) {
-    bookGroups.push(books.slice(i, i + 2));
+  const [previewFile, setPreviewFile] = useState<DigitalLibraryItem | null>(
+    null,
+  );
+
+  const { data: books = [], isLoading } = useGetDigitalLibrary();
+
+  let REPEAT_COUNT =
+    books.length > 0 ? Math.max(4, Math.ceil(24 / books.length)) : 1;
+
+  if (books.length % 2 !== 0 && REPEAT_COUNT % 2 !== 0) {
+    REPEAT_COUNT += 1;
   }
 
-  const REPEAT_COUNT = 3;
-  const displayGroups = Array.from(
-    { length: REPEAT_COUNT },
-    () => bookGroups,
-  ).flat();
+  const flatBooks =
+    books.length > 0
+      ? Array.from({ length: REPEAT_COUNT }, () => books).flat()
+      : [];
+
+  const displayGroups: DigitalLibraryItem[][] = [];
+  for (let i = 0; i < flatBooks.length; i += 2) {
+    displayGroups.push(flatBooks.slice(i, i + 2));
+  }
+  const renderPreviewContent = (file: DigitalLibraryItem) => {
+    const fileUrl = file.file_path;
+    const path = fileUrl.toLowerCase();
+
+    // 1. معاينة الصور
+    if (path.match(/\.(png|jpg|jpeg|webp)$/)) {
+      return (
+        <div className="relative w-full h-[65vh] flex items-center justify-center">
+          <Image
+            src={fileUrl}
+            alt={file.title}
+            fill
+            className="object-contain rounded-lg"
+          />
+        </div>
+      );
+    }
+
+    // 2. معاينة ملفات الـ PDF (متوافقة تماماً مع اللابتوب والموبايل)
+    if (path.endsWith(".pdf") || path.includes(".pdf?")) {
+      return (
+        <div className="flex flex-col items-center justify-center w-full h-[65vh] gap-4">
+          <iframe
+            src={`${fileUrl}#view=FitH`}
+            className="hidden w-full h-full bg-white border border-gray-200 rounded-lg md:block"
+            title={file.title}
+          />
+
+          <div className="flex flex-col items-center justify-center w-full h-full gap-4 px-4 py-10 text-center bg-white border border-gray-200 rounded-lg md:hidden">
+            <div className="p-4 text-red-600 rounded-full bg-red-50">
+              <Download className="w-10 h-10" />
+            </div>
+            <h3 className="text-lg font-bold text-gray-800">{file.title}</h3>
+            <p className="max-w-xs text-xs text-gray-500">
+              متصفحات الهواتف لا تدعم العرض المباشر للـ PDF داخل الصفحة، يمكنك
+              فتحه مباشرة أو تحميله.
+            </p>
+            <div className="flex items-center w-full max-w-xs gap-2 mt-2">
+              <a
+                href={fileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 text-xs font-bold text-center text-black bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors"
+              >
+                فتح في تبويب جديد
+              </a>
+              <a
+                href={fileUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 text-xs font-bold text-center text-white bg-black rounded-xl hover:bg-gray-800 transition-colors"
+              >
+                تحميل
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // 3. المستندات الأخرى (Word وغيرها)
+    return (
+      <div className="flex flex-col items-center justify-center h-[40vh] gap-4 text-center px-4">
+        <div className="p-4 text-blue-600 rounded-full bg-blue-50">
+          <Download className="w-10 h-10" />
+        </div>
+        <h3 className="text-xl font-bold text-gray-800">
+          هذا الملف عبارة عن مستند قابل للتحميل
+        </h3>
+        <p className="max-w-md text-sm text-gray-500">
+          لا يمكن عرض هذا النوع من الملفات مباشرة داخل متصفح الإنترنت، يرجى
+          تحميله للاطلاع عليه.
+        </p>
+        <a
+          href={fileUrl}
+          download
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-2.5 text-sm font-bold text-white bg-black rounded-xl hover:bg-gray-800 transition-colors"
+        >
+          تحميل الملف الآن
+        </a>
+      </div>
+    );
+  };
 
   return (
     <section className="w-full bg-[#F7F2EA]">
@@ -303,16 +329,7 @@ export const DigitalLibrary = () => {
           <div className="flex flex-col items-start gap-4 text-right">
             <div className="flex items-center gap-1 mb-3">
               <div className="w-8 md:w-10 h-[1px] bg-[#723F00]" />
-              {/* <div className="relative flex items-center justify-center overflow-hidden w-7 h-7 md:w-8 md:h-8">
-                <Image
-                  src="/images/icon.png"
-                  alt="Icon"
-                  fill
-                  className="object-contain p-1"
-                />
-              </div> */}
               <span className="text-[11px] md:text-xs font-bold text-[#723F00]">
-                {" "}
                 أرشيف موثّق
               </span>
             </div>
@@ -341,62 +358,127 @@ export const DigitalLibrary = () => {
           </div>
         </div>
 
-        <Carousel
-          setApi={setApi}
-          plugins={[plugin.current]}
-          opts={{ align: "start", direction: "rtl", loop: true }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {displayGroups.map((group, i) => (
-              <CarouselItem
-                key={i}
-                className=" basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-              >
-                <div className="flex flex-col gap-2.5">
-                  {group.map((book, j) => {
-                    const globalIndex = i * 2 + j;
-                    const uid = `${i}-${j}`;
-                    return (
-                      <div
-                        key={j}
-                        className="flex flex-col p-6 h-[240px] bg-white border border-gray-100 shadow-sm rounded-xl"
-                      >
-                        <div className="flex items-start justify-between">
-                          <BookIcon index={globalIndex} uid={uid} />
-                          <span className="text-[11px] text-[#733F00] font-medium">
-                            {book.date}
-                          </span>
-                        </div>
-
-                        <div className="flex flex-col items-start justify-center flex-1 py-2">
-                          <div className="flex items-center justify-start gap-2">
-                            <p className="text-base font-bold text-right text-gray-900 sm:text-xl">
-                              {book.title}
-                            </p>
-                            <span className="text-[11px] sm:text-[12px] text-gray-400 mt-1">
-                              {book.tag} — {book.size}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-20">
+            <p className="text-base text-gray-500">
+              جاري تحميل أرشيف المكتبة الرقمية...
+            </p>
+          </div>
+        ) : books.length === 0 ? (
+          <div className="flex items-center justify-center py-20">
+            <p className="text-base text-gray-500">
+              لا توجد ملفات متاحة في المكتبة الرقمية حالياً.
+            </p>
+          </div>
+        ) : (
+          <Carousel
+            setApi={setApi}
+            plugins={[plugin.current]}
+            opts={{ align: "start", direction: "rtl", loop: true }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {displayGroups.map((group, i) => (
+                <CarouselItem
+                  key={i}
+                  className="pl-4 basis-full sm:basis-1/2 md:basis-1/4 lg:basis-1/4"
+                >
+                  <div className="flex flex-col gap-2.5">
+                    {group.map((book, j) => {
+                      const uid = `${i}-${j}`;
+                      return (
+                        <div
+                          key={book.id || j}
+                          className="flex flex-col p-6 h-[240px] bg-white border border-gray-100 shadow-sm rounded-xl justify-between"
+                        >
+                          <div className="flex items-start justify-between w-full">
+                            {getFileIcon(book.file_path, uid)}
+                            <span className="text-[11px] text-[#733F00] font-medium">
+                              {book.date}
                             </span>
                           </div>
-                        </div>
 
-                        <div className="flex items-center gap-2">
-                          <button className="flex-1 py-4 text-xs font-bold text-black bg-transparent border border-black rounded-lg hover:bg-gray-100">
-                            معاينة
-                          </button>
-                          <button className="flex-1 py-4 text-xs font-bold text-white bg-black rounded-lg hover:bg-gray-800">
-                            تحميل
-                          </button>
+                          <div className="flex flex-col items-start justify-center flex-1 py-2">
+                            <div className="flex flex-col items-start justify-start w-full gap-1">
+                              <div className="flex items-center justify-start w-full gap-3">
+                                <p className="text-base font-bold text-right text-gray-900 sm:text-lg line-clamp-1">
+                                  {book.title}
+                                </p>
+                                <span className="text-[11px] sm:text-[12px] text-gray-400 whitespace-nowrap flex-shrink-0">
+                                  {book.tag} — {book.size}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setPreviewFile(book)}
+                              className="flex-1 py-4 text-xs font-bold text-center text-black transition-colors bg-transparent border border-black rounded-lg hover:bg-gray-100"
+                            >
+                              معاينة
+                            </button>
+                            <a
+                              href={book.file_path}
+                              download
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 py-4 text-xs font-bold text-center text-white transition-colors bg-black rounded-lg hover:bg-gray-800"
+                            >
+                              تحميل
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+                      );
+                    })}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        )}
       </div>
+
+      {previewFile && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-20 overflow-y-auto bg-black/70 backdrop-blur-sm md:pt-24">
+          <div className="relative w-full max-w-4xl max-h-[85vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col my-auto">
+            <div className="flex items-center justify-between flex-shrink-0 px-6 py-4 border-b border-gray-100 bg-gray-50">
+              <div className="flex flex-col items-start">
+                <h3 className="text-lg font-bold text-gray-900">
+                  {previewFile.title}
+                </h3>
+                <span className="text-xs text-gray-500">
+                  {previewFile.tag} — {previewFile.size}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={previewFile.file_path}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-gray-600 transition-colors rounded-lg hover:text-black hover:bg-gray-200"
+                  title="تحميل الملف"
+                >
+                  <Download className="w-5 h-5" />
+                </a>
+                <button
+                  onClick={() => setPreviewFile(null)}
+                  className="p-2 text-gray-600 transition-colors rounded-lg hover:text-red-600 hover:bg-red-50"
+                  title="إغلاق"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center flex-1 p-4 overflow-y-auto bg-gray-100">
+              {renderPreviewContent(previewFile)}
+            </div>
+          </div>
+        </div>
+      )}
+
       <DecorativeBorder />
     </section>
   );
