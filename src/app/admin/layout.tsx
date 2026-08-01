@@ -23,16 +23,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (!token) return null;
 
   const navItems = [
-    { name: "الأمراء والقرون", href: "/admin/princes", icon: Crown },
+    { name: "الأمراء ", href: "/admin/princes", icon: Crown },
     { name: "المشائخ وطلبة العلم", href: "/admin/scholars", icon: Users },
     { name: "الأعمال الخيرية", href: "/admin/charities", icon: HeartHandshake },
     { name: "المكتبة الرقمية", href: "/admin/library", icon: BookOpen },
   ];
 
   return (
-    <div className="min-h-screen pt-28 md:pt-[160px] bg-[#d8c8b5] flex flex-col md:flex-row" dir="rtl">
-      {/* تم تغيير خلفية الـ Sidebar لدرجة أفتح (فانيلا دافئة) لعمل تباين احترافي مع خلفية الموقع */}
-      <aside className="w-full md:w-72 bg-[#F4EFEA] text-[#1B0F00] flex flex-col p-4 md:p-6 shadow-lg shrink-0 border-b md:border-b-0 md:border-l border-[#d4c4b2] gap-4">
+    <div className="min-h-screen pt-28 md:pt-[145px] bg-[#d8c8b5] flex flex-col md:flex-row" dir="rtl">
+      <aside className="w-full md:w-68 xl:w-35 2xl:w-65 bg-[#c0b0a0] text-[#1B0F00] flex flex-col p-4 md:p-6 shadow-lg shrink-0 border-b md:border-b-0 md:border-l border-[#d4c4b2] gap-4 md:-mt-36 md:pt-40 md:min-h-screen">
         
         <div className="pb-3 border-b border-[#e2d5c9] hidden md:block">
           <h2 className="text-lg font-bold tracking-wide text-[#1B0F00]">لوحة التحكم</h2>
